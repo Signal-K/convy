@@ -1,0 +1,614 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */; };
+		B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */; };
+		B5CFD83C2DFE2C4E00A4E6E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CFD83B2DFE2C4E00A4E6E4 /* Assets.xcassets */; };
+		B5CFD83F2DFE2C4E00A4E6E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CFD83E2DFE2C4E00A4E6E4 /* Preview Assets.xcassets */; };
+		B5CFD8492DFE2C4E00A4E6E4 /* ConvoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8482DFE2C4E00A4E6E4 /* ConvoTests.swift */; };
+		B5CFD8532DFE2C4E00A4E6E4 /* ConvoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8522DFE2C4E00A4E6E4 /* ConvoUITests.swift */; };
+		B5CFD8552DFE2C4E00A4E6E4 /* ConvoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8542DFE2C4E00A4E6E4 /* ConvoUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B5CFD8452DFE2C4E00A4E6E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5CFD82C2DFE2C4D00A4E6E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5CFD8332DFE2C4D00A4E6E4;
+			remoteInfo = Convo;
+		};
+		B5CFD84F2DFE2C4E00A4E6E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5CFD82C2DFE2C4D00A4E6E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5CFD8332DFE2C4D00A4E6E4;
+			remoteInfo = Convo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B5CFD8342DFE2C4D00A4E6E4 /* Convo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Convo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoApp.swift; sourceTree = "<group>"; };
+		B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B5CFD83B2DFE2C4E00A4E6E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5CFD83E2DFE2C4E00A4E6E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B5CFD8442DFE2C4E00A4E6E4 /* ConvoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConvoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CFD8482DFE2C4E00A4E6E4 /* ConvoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoTests.swift; sourceTree = "<group>"; };
+		B5CFD84E2DFE2C4E00A4E6E4 /* ConvoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConvoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5CFD8522DFE2C4E00A4E6E4 /* ConvoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoUITests.swift; sourceTree = "<group>"; };
+		B5CFD8542DFE2C4E00A4E6E4 /* ConvoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B5CFD8312DFE2C4D00A4E6E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD8412DFE2C4E00A4E6E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD84B2DFE2C4E00A4E6E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B5CFD82B2DFE2C4D00A4E6E4 = {
+			isa = PBXGroup;
+			children = (
+				B5CFD8362DFE2C4D00A4E6E4 /* Convo */,
+				B5CFD8472DFE2C4E00A4E6E4 /* ConvoTests */,
+				B5CFD8512DFE2C4E00A4E6E4 /* ConvoUITests */,
+				B5CFD8352DFE2C4D00A4E6E4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5CFD8352DFE2C4D00A4E6E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5CFD8342DFE2C4D00A4E6E4 /* Convo.app */,
+				B5CFD8442DFE2C4E00A4E6E4 /* ConvoTests.xctest */,
+				B5CFD84E2DFE2C4E00A4E6E4 /* ConvoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5CFD8362DFE2C4D00A4E6E4 /* Convo */ = {
+			isa = PBXGroup;
+			children = (
+				B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */,
+				B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */,
+				B5CFD83B2DFE2C4E00A4E6E4 /* Assets.xcassets */,
+				B5CFD83D2DFE2C4E00A4E6E4 /* Preview Content */,
+			);
+			path = Convo;
+			sourceTree = "<group>";
+		};
+		B5CFD83D2DFE2C4E00A4E6E4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B5CFD83E2DFE2C4E00A4E6E4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B5CFD8472DFE2C4E00A4E6E4 /* ConvoTests */ = {
+			isa = PBXGroup;
+			children = (
+				B5CFD8482DFE2C4E00A4E6E4 /* ConvoTests.swift */,
+			);
+			path = ConvoTests;
+			sourceTree = "<group>";
+		};
+		B5CFD8512DFE2C4E00A4E6E4 /* ConvoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B5CFD8522DFE2C4E00A4E6E4 /* ConvoUITests.swift */,
+				B5CFD8542DFE2C4E00A4E6E4 /* ConvoUITestsLaunchTests.swift */,
+			);
+			path = ConvoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5CFD8332DFE2C4D00A4E6E4 /* Convo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CFD8582DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "Convo" */;
+			buildPhases = (
+				B5CFD8302DFE2C4D00A4E6E4 /* Sources */,
+				B5CFD8312DFE2C4D00A4E6E4 /* Frameworks */,
+				B5CFD8322DFE2C4D00A4E6E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5CFD8632DFE2C9700A4E6E4 /* PBXTargetDependency */,
+			);
+			name = Convo;
+			productName = Convo;
+			productReference = B5CFD8342DFE2C4D00A4E6E4 /* Convo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B5CFD8432DFE2C4E00A4E6E4 /* ConvoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CFD85B2DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "ConvoTests" */;
+			buildPhases = (
+				B5CFD8402DFE2C4E00A4E6E4 /* Sources */,
+				B5CFD8412DFE2C4E00A4E6E4 /* Frameworks */,
+				B5CFD8422DFE2C4E00A4E6E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5CFD8462DFE2C4E00A4E6E4 /* PBXTargetDependency */,
+			);
+			name = ConvoTests;
+			productName = ConvoTests;
+			productReference = B5CFD8442DFE2C4E00A4E6E4 /* ConvoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B5CFD84D2DFE2C4E00A4E6E4 /* ConvoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5CFD85E2DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "ConvoUITests" */;
+			buildPhases = (
+				B5CFD84A2DFE2C4E00A4E6E4 /* Sources */,
+				B5CFD84B2DFE2C4E00A4E6E4 /* Frameworks */,
+				B5CFD84C2DFE2C4E00A4E6E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5CFD8502DFE2C4E00A4E6E4 /* PBXTargetDependency */,
+			);
+			name = ConvoUITests;
+			productName = ConvoUITests;
+			productReference = B5CFD84E2DFE2C4E00A4E6E4 /* ConvoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5CFD82C2DFE2C4D00A4E6E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					B5CFD8332DFE2C4D00A4E6E4 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					B5CFD8432DFE2C4E00A4E6E4 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = B5CFD8332DFE2C4D00A4E6E4;
+					};
+					B5CFD84D2DFE2C4E00A4E6E4 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = B5CFD8332DFE2C4D00A4E6E4;
+					};
+				};
+			};
+			buildConfigurationList = B5CFD82F2DFE2C4D00A4E6E4 /* Build configuration list for PBXProject "Convo" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B5CFD82B2DFE2C4D00A4E6E4;
+			packageReferences = (
+				B5CFD8612DFE2C8400A4E6E4 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			productRefGroup = B5CFD8352DFE2C4D00A4E6E4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B5CFD8332DFE2C4D00A4E6E4 /* Convo */,
+				B5CFD8432DFE2C4E00A4E6E4 /* ConvoTests */,
+				B5CFD84D2DFE2C4E00A4E6E4 /* ConvoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5CFD8322DFE2C4D00A4E6E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CFD83F2DFE2C4E00A4E6E4 /* Preview Assets.xcassets in Resources */,
+				B5CFD83C2DFE2C4E00A4E6E4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD8422DFE2C4E00A4E6E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD84C2DFE2C4E00A4E6E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B5CFD8302DFE2C4D00A4E6E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */,
+				B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD8402DFE2C4E00A4E6E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CFD8492DFE2C4E00A4E6E4 /* ConvoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5CFD84A2DFE2C4E00A4E6E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5CFD8552DFE2C4E00A4E6E4 /* ConvoUITestsLaunchTests.swift in Sources */,
+				B5CFD8532DFE2C4E00A4E6E4 /* ConvoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B5CFD8462DFE2C4E00A4E6E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5CFD8332DFE2C4D00A4E6E4 /* Convo */;
+			targetProxy = B5CFD8452DFE2C4E00A4E6E4 /* PBXContainerItemProxy */;
+		};
+		B5CFD8502DFE2C4E00A4E6E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5CFD8332DFE2C4D00A4E6E4 /* Convo */;
+			targetProxy = B5CFD84F2DFE2C4E00A4E6E4 /* PBXContainerItemProxy */;
+		};
+		B5CFD8632DFE2C9700A4E6E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = B5CFD8622DFE2C9700A4E6E4 /* Supabase */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B5CFD8562DFE2C4E00A4E6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B5CFD8572DFE2C4E00A4E6E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B5CFD8592DFE2C4E00A4E6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Convo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.Convo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B5CFD85A2DFE2C4E00A4E6E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Convo/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.Convo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B5CFD85C2DFE2C4E00A4E6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.ConvoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Convo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Convo";
+			};
+			name = Debug;
+		};
+		B5CFD85D2DFE2C4E00A4E6E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.ConvoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Convo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Convo";
+			};
+			name = Release;
+		};
+		B5CFD85F2DFE2C4E00A4E6E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.ConvoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Convo;
+			};
+			name = Debug;
+		};
+		B5CFD8602DFE2C4E00A4E6E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = fromscroobles.ConvoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Convo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5CFD82F2DFE2C4D00A4E6E4 /* Build configuration list for PBXProject "Convo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CFD8562DFE2C4E00A4E6E4 /* Debug */,
+				B5CFD8572DFE2C4E00A4E6E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5CFD8582DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "Convo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CFD8592DFE2C4E00A4E6E4 /* Debug */,
+				B5CFD85A2DFE2C4E00A4E6E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5CFD85B2DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "ConvoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CFD85C2DFE2C4E00A4E6E4 /* Debug */,
+				B5CFD85D2DFE2C4E00A4E6E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5CFD85E2DFE2C4E00A4E6E4 /* Build configuration list for PBXNativeTarget "ConvoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5CFD85F2DFE2C4E00A4E6E4 /* Debug */,
+				B5CFD8602DFE2C4E00A4E6E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B5CFD8612DFE2C8400A4E6E4 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B5CFD8622DFE2C9700A4E6E4 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5CFD8612DFE2C8400A4E6E4 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B5CFD82C2DFE2C4D00A4E6E4 /* Project object */;
+}
