@@ -5,6 +5,7 @@
 //  Created by Liam Arbuckle on 2/7/2025.
 //
 
+import Foundation
 import SwiftUI
 
 private let appBackground = Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1))
@@ -12,14 +13,73 @@ private let surface = Color.white
 private let primary = Color(#colorLiteral(red: 0.23, green: 0.43, blue: 0.67, alpha: 1))
 private let border = Color(#colorLiteral(red: 0.78, green: 0.83, blue: 0.9, alpha: 1))
 
+struct QuizAnswer: Codable {
+    let question: String
+    let selectedAnswer: String
+    let correctAnswer: String
+    
+    var isCorrect: Bool {
+        selectedAnswer == correctAnswer
+    }
+}
+
+struct QuizProgress: Codable {
+    let quizTitle: String
+    var answers: [QuizAnswer]
+    var totalQuestions: Int
+
+    var isCompleted: Bool {
+        answers.count >= totalQuestions
+    }
+
+    var correctCount: Int {
+        answers.filter { $0.isCorrect }.count
+    }
+}
+
+class QuizProgressManager {
+    static let shared = QuizProgressManager()
+    private let keyPrefix = "quiz_progress_"
+
+    func saveProgress(for quiz: Quiz, progress: QuizProgress) {
+        let key = keyPrefix + quiz.title
+        if let encoded = try? JSONEncoder().encode(progress) {
+            UserDefaults.standard.set(encoded, forKey: key)
+        }
+    }
+
+    func loadProgress(for quiz: Quiz) -> QuizProgress? {
+        let key = keyPrefix + quiz.title
+        guard let data = UserDefaults.standard.data(forKey: key),
+              let decoded = try? JSONDecoder().decode(QuizProgress.self, from: data) else {
+            return nil
+        }
+        return decoded
+    }
+
+    func clearProgress(for quiz: Quiz) {
+        let key = keyPrefix + quiz.title
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+
+    func resetAllProgress() {
+        let defaults = UserDefaults.standard
+        for key in defaults.dictionaryRepresentation().keys {
+            if key.hasPrefix("quiz_progress_") {
+                defaults.removeObject(forKey: key)
+            }
+        }
+    }
+}
+
 
 struct QuizQuestion: Identifiable {
     let id = UUID()
     let question: String
     let answers: [String]
     let correctAnswer: String
-    let reasoning: String
-    let skillsGained: [(name: String, description: String)]
+//    let reasoning: String
+//    let skillsGained: [(name: String, description: String)]
 }
 
 struct QuizView: View {
@@ -76,7 +136,7 @@ struct QuizView: View {
                         let quizAnswer = QuizAnswer(
                             question: currentQuestion.question,
                             selectedAnswer: answer,
-                            isCorrect: isCorrect
+                            correctAnswer: currentQuestion.correctAnswer
                         )
 
                         // Save answer to progress

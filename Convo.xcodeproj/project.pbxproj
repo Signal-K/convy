@@ -14,11 +14,11 @@
 		B559F4CF2E23B7F90014866E /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = B559F4CE2E23B7F90014866E /* Supabase */; };
 		B560088B2E24A92D000558F8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088A2E24A92C000558F8 /* ProfileView.swift */; };
 		B560088D2E24AA4B000558F8 /* ConvoInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088C2E24AA49000558F8 /* ConvoInputField.swift */; };
+		B593AEEA2E261B2500BAF13C /* QuizContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B593AEE92E261B2200BAF13C /* QuizContent.swift */; };
 		B59E6D452E253FB000FFC42C /* QuizResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D442E253FAD00FFC42C /* QuizResult.swift */; };
 		B59E6D492E25447F00FFC42C /* UserSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D482E25447B00FFC42C /* UserSetup.swift */; };
 		B59E6D4B2E25461500FFC42C /* ProfileSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D4A2E25461000FFC42C /* ProfileSummary.swift */; };
 		B59E6D4D2E25470700FFC42C /* NeumorphicInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D4C2E25470000FFC42C /* NeumorphicInputField.swift */; };
-		B59E6D4F2E25AC2400FFC42C /* QuizProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D4E2E25AC1F00FFC42C /* QuizProgress.swift */; };
 		B59E6D512E25B10E00FFC42C /* UserProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D502E25B10900FFC42C /* UserProgress.swift */; };
 		B59E6D532E25B37100FFC42C /* StreakCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D522E25B36D00FFC42C /* StreakCalendar.swift */; };
 		B59E6D562E25B4B400FFC42C /* FullCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D552E25B4B000FFC42C /* FullCalendar.swift */; };
@@ -43,11 +43,11 @@
 		B53E22D62E23F0DD00FC1A3A /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		B560088A2E24A92C000558F8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B560088C2E24AA49000558F8 /* ConvoInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoInputField.swift; sourceTree = "<group>"; };
+		B593AEE92E261B2200BAF13C /* QuizContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizContent.swift; sourceTree = "<group>"; };
 		B59E6D442E253FAD00FFC42C /* QuizResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResult.swift; sourceTree = "<group>"; };
 		B59E6D482E25447B00FFC42C /* UserSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetup.swift; sourceTree = "<group>"; };
 		B59E6D4A2E25461000FFC42C /* ProfileSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSummary.swift; sourceTree = "<group>"; };
 		B59E6D4C2E25470000FFC42C /* NeumorphicInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicInputField.swift; sourceTree = "<group>"; };
-		B59E6D4E2E25AC1F00FFC42C /* QuizProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizProgress.swift; sourceTree = "<group>"; };
 		B59E6D502E25B10900FFC42C /* UserProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgress.swift; sourceTree = "<group>"; };
 		B59E6D522E25B36D00FFC42C /* StreakCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakCalendar.swift; sourceTree = "<group>"; };
 		B59E6D552E25B4B000FFC42C /* FullCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCalendar.swift; sourceTree = "<group>"; };
@@ -81,6 +81,7 @@
 		B53E22D02E23ED5C00FC1A3A /* QuizContent */ = {
 			isa = PBXGroup;
 			children = (
+				B593AEE82E261B1100BAF13C /* Quizzes */,
 				B59E6D442E253FAD00FFC42C /* QuizResult.swift */,
 				B53E22D12E23ED6100FC1A3A /* QuizQuestion.swift */,
 			);
@@ -102,12 +103,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B593AEE82E261B1100BAF13C /* Quizzes */ = {
+			isa = PBXGroup;
+			children = (
+				B593AEE92E261B2200BAF13C /* QuizContent.swift */,
+			);
+			path = Quizzes;
+			sourceTree = "<group>";
+		};
 		B59E6D472E25447800FFC42C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
 				B59E6D542E25B4AA00FFC42C /* Calendar */,
 				B59E6D502E25B10900FFC42C /* UserProgress.swift */,
-				B59E6D4E2E25AC1F00FFC42C /* QuizProgress.swift */,
 				B59E6D482E25447B00FFC42C /* UserSetup.swift */,
 			);
 			path = Storage;
@@ -281,6 +289,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B593AEEA2E261B2500BAF13C /* QuizContent.swift in Sources */,
 				B59E6D4D2E25470700FFC42C /* NeumorphicInputField.swift in Sources */,
 				B5CFD8652DFE40AC00A4E6E4 /* Supabase.swift in Sources */,
 				B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */,
@@ -295,7 +304,6 @@
 				B59E6D562E25B4B400FFC42C /* FullCalendar.swift in Sources */,
 				B59E6D492E25447F00FFC42C /* UserSetup.swift in Sources */,
 				B560088D2E24AA4B000558F8 /* ConvoInputField.swift in Sources */,
-				B59E6D4F2E25AC2400FFC42C /* QuizProgress.swift in Sources */,
 				B5CFD8692DFE40CC00A4E6E4 /* AuthView.swift in Sources */,
 				B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */,
 				B5CFD86C2DFE40ED00A4E6E4 /* CustomTextField.swift in Sources */,
