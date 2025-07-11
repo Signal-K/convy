@@ -44,8 +44,94 @@ struct AuthView: View {
                         .font(.title)
                         .bold()
                         .foregroundColor(primary)
+                    
+                    VStack(spacing: 20) {
+                        CustomTextField(placeholder: "Email", text: $email, isSecure: false)
+                        CustomTextField(placeholder: "Password", text: $password, isSecure: true)
+                    }
+                    
+                    if let result {
+                        switch result {
+                        case .success:
+                            Text("Signed in successfully")
+                                .foregroundColor(.green)
+                        case .failure(let error):
+                            Text(error.localizedDescription)
+                                .foregroundColor(.red)
+                        }
+                    }
+                    
+                    VStack(spacing: 16) {
+                        Button(action: signInButtonTapped) {
+                            Text("Sign In")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .fill(primary)
+                                        .shadow(color: primary.opacity(0.3), radius: 8, x: 4, y: 4)
+                                )
+                        }
+                        
+                        Button(action: signUpButtonTapped) {
+                            Text("Sign Up")
+                                .fontWeight(.semibold)
+                                .foregroundColor(primary)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .fill(surface)
+                                        .shadow(color: .white, radius: 6, x: -4, y: -4)
+                                        .shadow(color: .gray.opacity(0.3), radius: 6, x: 4, y: 4)
+                                )
+                        }
+                    }
+                    
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: primary))
+                            .padding()
+                    }
+                    
+                    Spacer()
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, geometry.safeAreaInsets.top)
+            }
+            .background(background.ignoresSafeArea())
+        }
+    }
+    
+    func signInButtonTapped() {
+        Task {
+            isLoading = true
+            defer { isLoading = false }
+            do {
+                try await supabase.auth.signIn(email: email, password: password)
+                result = .success(())
+            } catch {
+                result = .failure(error)
             }
         }
     }
+
+    func signUpButtonTapped() {
+        Task {
+            isLoading = true
+            defer { isLoading = false }
+            do {
+                try await supabase.auth.signUp(email: email, password: password)
+                result = .success(())
+            } catch {
+                result = .failure(error)
+            }
+        }
+    }
+}
+
+#Preview {
+    AuthView()
 }

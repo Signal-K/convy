@@ -8,7 +8,8 @@ struct AppView: View {
             if isAuthenticated {
                 BottomNavigation()
             } else {
-                AuthView()
+//                AuthView()
+                BottomNavigation()
             }
         }
         .task {
@@ -19,4 +20,8 @@ struct AppView: View {
             }
         }
     }
+}
+
+#Preview {
+    AppView()
 }

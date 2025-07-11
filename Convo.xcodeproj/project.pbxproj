@@ -12,6 +12,8 @@
 		B53E22D52E23F05C00FC1A3A /* BottomNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E22D42E23F05700FC1A3A /* BottomNav.swift */; };
 		B53E22D72E23F0DF00FC1A3A /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E22D62E23F0DD00FC1A3A /* AppView.swift */; };
 		B559F4CF2E23B7F90014866E /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = B559F4CE2E23B7F90014866E /* Supabase */; };
+		B560088B2E24A92D000558F8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088A2E24A92C000558F8 /* ProfileView.swift */; };
+		B560088D2E24AA4B000558F8 /* ConvoInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088C2E24AA49000558F8 /* ConvoInputField.swift */; };
 		B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */; };
 		B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */; };
 		B5CFD83C2DFE2C4E00A4E6E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CFD83B2DFE2C4E00A4E6E4 /* Assets.xcassets */; };
@@ -31,6 +33,8 @@
 		B53E22D12E23ED6100FC1A3A /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		B53E22D42E23F05700FC1A3A /* BottomNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNav.swift; sourceTree = "<group>"; };
 		B53E22D62E23F0DD00FC1A3A /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		B560088A2E24A92C000558F8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B560088C2E24AA49000558F8 /* ConvoInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoInputField.swift; sourceTree = "<group>"; };
 		B5CFD8342DFE2C4D00A4E6E4 /* Convo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Convo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoApp.swift; sourceTree = "<group>"; };
 		B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 		B5CFD8672DFE40C200A4E6E4 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				B560088A2E24A92C000558F8 /* ProfileView.swift */,
 				B5CFD8682DFE40CC00A4E6E4 /* AuthView.swift */,
 			);
 			path = Login;
@@ -143,6 +148,7 @@
 		B5CFD86A2DFE40E200A4E6E4 /* UICommon */ = {
 			isa = PBXGroup;
 			children = (
+				B560088C2E24AA49000558F8 /* ConvoInputField.swift */,
 				B5CFD86B2DFE40ED00A4E6E4 /* CustomTextField.swift */,
 			);
 			path = UICommon;
@@ -237,10 +243,12 @@
 			files = (
 				B5CFD8652DFE40AC00A4E6E4 /* Supabase.swift in Sources */,
 				B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */,
+				B560088B2E24A92D000558F8 /* ProfileView.swift in Sources */,
 				B53E22D72E23F0DF00FC1A3A /* AppView.swift in Sources */,
 				B53E22D22E23ED6400FC1A3A /* QuizQuestion.swift in Sources */,
 				B53E22CF2E23EACE00FC1A3A /* QuizList.swift in Sources */,
 				B53E22D52E23F05C00FC1A3A /* BottomNav.swift in Sources */,
+				B560088D2E24AA4B000558F8 /* ConvoInputField.swift in Sources */,
 				B5CFD8692DFE40CC00A4E6E4 /* AuthView.swift in Sources */,
 				B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */,
 				B5CFD86C2DFE40ED00A4E6E4 /* CustomTextField.swift in Sources */,

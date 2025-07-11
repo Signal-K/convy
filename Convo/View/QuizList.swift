@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+private let appBackground = Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1))
+private let surface = Color.white
+private let primary = Color(#colorLiteral(red: 0.23, green: 0.43, blue: 0.67, alpha: 1))
+private let border = Color(#colorLiteral(red: 0.78, green: 0.83, blue: 0.9, alpha: 1))
+
 struct Quiz: Identifiable {
     let id = UUID()
     let title: String
@@ -16,7 +21,6 @@ struct Quiz: Identifiable {
 struct QuizDetailView: View {
     let quiz: Quiz
 
-    // Map each quiz title to a question set
     var quizQuestions: [QuizQuestion] {
         switch quiz.title {
         case "Start a Conversation":
@@ -41,7 +45,6 @@ struct QuizDetailView: View {
                     ],
                     correctAnswer: "A. “It’s okay, Liam. Take your time and tell me what happened when you’re ready.”"
                 )
-                // Add more questions as needed
             ]
         default:
             return []
@@ -60,7 +63,7 @@ struct QuizDetailView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle(quiz.title)
-            .background(Color(.systemGroupedBackground))
+            .background(appBackground)
         } else {
             QuizView(questions: quizQuestions)
                 .navigationTitle(quiz.title)
@@ -68,51 +71,55 @@ struct QuizDetailView: View {
     }
 }
 
-
 struct QuizListView: View {
     let quizzes: [Quiz] = [
-       Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
-       Quiz(title: "Express Yourself", description: "Work on tone, emotion, and clarity."),
-       Quiz(title: "Handle Interruptions", description: "Train your assertiveness and flow."),
-       Quiz(title: "Body Language Basics", description: "Non-verbal cues and posture awareness.")
-   ]
+        Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
+        Quiz(title: "Express Yourself", description: "Work on tone, emotion, and clarity."),
+        Quiz(title: "Handle Interruptions", description: "Train your assertiveness and flow."),
+        Quiz(title: "Body Language Basics", description: "Non-verbal cues and posture awareness.")
+    ]
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                Text("Available Quizzes")
-                    .font(.largeTitle)
-                    .bold()
-                    .padding(.top)
-                
-                List(quizzes) { quiz in
-                    let questionsAvailable = QuizDetailView(quiz: quiz).quizQuestions.isEmpty == false
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    Text("Available Quizzes")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(primary)
+                        .padding(.top)
 
-                    NavigationLink(
-                        destination: QuizDetailView(quiz: quiz),
-                        label: {
-                            VStack(alignment: .leading) {
+                    ForEach(quizzes) { quiz in
+                        let questionsAvailable = !QuizDetailView(quiz: quiz).quizQuestions.isEmpty
+
+                        NavigationLink(destination: QuizDetailView(quiz: quiz)) {
+                            VStack(alignment: .leading, spacing: 6) {
                                 Text(quiz.title)
                                     .font(.headline)
-                                    .foregroundColor(questionsAvailable ? .primary : .gray)
+                                    .foregroundColor(questionsAvailable ? primary : .gray)
                                 Text(quiz.description)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
-                            .padding(.vertical, 4)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(surface)
+                                    .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
+                                    .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
+                            )
                         }
-                    )
-                    .disabled(!questionsAvailable)
+                        .disabled(!questionsAvailable)
+                    }
                 }
-                .listStyle(InsetGroupedListStyle())
+                .padding(24)
             }
-            .padding(.horizontal)
+            .background(appBackground.ignoresSafeArea())
         }
     }
 }
 
-struct QuizListView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuizListView()
-    }
+#Preview {
+    QuizListView()
 }
