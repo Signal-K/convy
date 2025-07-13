@@ -112,6 +112,109 @@ struct QuizContent {
             )
         ],
         
+        "Turning an acquaintance to a friend": [
+            QuizQuestion(
+                question: "What’s the best way to open the conversation?",
+                answers: [
+                    "“Hey, I’ve been meaning to say hi, how’s your day?”",
+                    "“Why don’t you ever talk to anyone around here?”",
+                    "“Your plants look alright, I guess.”",
+                    "“You’re always so quiet; don’t you have friends?”"
+                ],
+                correctAnswer: "“Hey, I’ve been meaning to say hi, how’s your day?”"
+            ),
+            QuizQuestion(
+                question: "What’s a good topic to keep the conversation going?",
+                answers: [
+                    "“Nice weather today, isn’t it? Perfect for gardening.”",
+                    "“Why do you always stay inside on weekends?”",
+                    "“Have you read anything interesting lately, or is it just boring stuff?”",
+                    "“I don’t really care what you do, but we should talk more.”"
+                ],
+                correctAnswer: "“Nice weather today, isn’t it? Perfect for gardening.”"
+            ),
+            QuizQuestion(
+                question: "What’s a good way to respond to Alex saying they like hiking?",
+                answers: [
+                    "“Oh, I love hiking too! Have you explored any nearby trails recently?”",
+                    "“Hiking sounds boring; I prefer watching TV all day.”",
+                    "“That’s nice, but I don’t really care about outdoor stuff.”",
+                    "“Why would anyone want to walk around in the dirt for fun?”"
+                ],
+                correctAnswer: "“Oh, I love hiking too! Have you explored any nearby trails recently?”"
+            ),
+            QuizQuestion(
+                question: "What’s a good way to talk about your interest in cooking?",
+                answers: [
+                    "“I’m trying to get better at cooking—any favorite recipes you recommend?”",
+                    "“I’m so much better at cooking than most people.”",
+                    "“I don’t cook much, and I don’t want to talk about it.”",
+                    "“Cooking is useless; takeout is way easier.”"
+                ],
+                correctAnswer: "“I’m trying to get better at cooking—any favorite recipes you recommend?”"
+            ),
+            QuizQuestion(
+                question: "How do you best show you’re actively listening?",
+                answers: [
+                    "“That sounds amazing! What was your favorite part of the hike?”",
+                    "“Yeah, whatever. I’m not really interested.”",
+                    "“I’m bored, can we change the subject?”",
+                    "“I don’t see why people get so excited about hiking.”"
+                ],
+                correctAnswer: "“That sounds amazing! What was your favorite part of the hike?”"
+            ),
+            QuizQuestion(
+                question: "What’s a good way to deepen the connection after laughing together?",
+                answers: [
+                    "“That was hilarious! We should swap more stories sometime.”",
+                    "“I’m glad you messed up, that makes you less annoying.”",
+                    "“I don’t have time to listen to silly stories.”",
+                    "“You’re always so clumsy, aren’t you?”"
+                ],
+                correctAnswer: "“That was hilarious! We should swap more stories sometime.”"
+            ),
+            QuizQuestion(
+                question: "How do you casually suggest a get-together?",
+                answers: [
+                    "“If you’re interested, maybe we could grab coffee sometime?”",
+                    "“You have to hang out with me this weekend, no excuses.”",
+                    "“I guess you probably don’t want to spend time with me.”",
+                    "“You better come to my place or I won’t talk to you again.”"
+                ],
+                correctAnswer: "“If you’re interested, maybe we could grab coffee sometime?”"
+            ),
+            QuizQuestion(
+                question: "What’s the best response when Alex seems unsure?",
+                answers: [
+                    "“No worries, maybe another time when it’s better for you.”",
+                    "“You’re just making excuses to avoid me.”",
+                    "“If you don’t want to hang out, just say so.”",
+                    "“Fine, I guess you don’t care about this friendship.”"
+                ],
+                correctAnswer: "“No worries, maybe another time when it’s better for you.”"
+            ),
+            QuizQuestion(
+                question: "What’s a good way to wrap up the chat?",
+                answers: [
+                    "“It was really nice talking to you, have a great day!”",
+                    "“I’m glad this is over; see you around.”",
+                    "“Well, don’t forget to call me next time you want to hang out.”",
+                    "“I’m bored, I’m leaving now.”"
+                ],
+                correctAnswer: "“It was really nice talking to you, have a great day!”"
+            ),
+            QuizQuestion(
+                question: "What’s a casual way to ask to stay in touch?",
+                answers: [
+                    "“Would you like to exchange numbers or maybe chat online sometime?”",
+                    "“Give me your number or I won’t talk to you again.”",
+                    "“I’m too busy to keep this up, but you can try reaching me.”",
+                    "“Don’t bother contacting me if you’re not serious.”"
+                ],
+                correctAnswer: "“Would you like to exchange numbers or maybe chat online sometime?”"
+            )
+        ],
+        
         "Deepening Intimacy": [
             QuizQuestion(
                 question: "Alex just walked through the front door, looking drained. You're sitting on the couch and want to gently acknowledge their presence. What's the best way to greet Alex?",

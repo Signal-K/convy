@@ -20,10 +20,10 @@ struct BottomNavigation: View {
                     Label("Skills", systemImage: "figure.walk")
                 }
 //
-//            ProfileView()
-//                .tabItem {
-//                    Label("Profile", systemImage: "person.crop.circle")
-//                }
+            ShopView()
+                .tabItem {
+                    Label("Shop", systemImage: "person.crop.circle")
+                }
             
             UserSetupView()
                 .tabItem {
