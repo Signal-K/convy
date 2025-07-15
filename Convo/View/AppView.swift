@@ -1,15 +1,18 @@
 import SwiftUI
 
 struct AppView: View {
-    @State var isAuthenticated = false
+    @State private var isAuthenticated = false
+    @AppStorage("userName") private var name = ""
 
     var body: some View {
         Group {
-            if isAuthenticated {
+            if name.isEmpty {
+//                UserSetupView() // new user onboarding
                 BottomNavigation()
+            } else if isAuthenticated {
+                BottomNavigation() // signed in + profile complete
             } else {
-//                AuthView()
-                BottomNavigation()
+                BottomNavigation() // fallback: maybe change this back to AuthView later
             }
         }
         .task {

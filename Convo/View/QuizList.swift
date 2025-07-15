@@ -2,22 +2,25 @@
 //  QuizList.swift
 //  Convo
 //
-//  Created by Liam Arbuckle on 13/7/2025.
+//  Created by Liam Arbuckle on 8/7/2025.
 //
 
 import SwiftUI
 
+// MARK: - Theme
 private let appBackground = Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1))
 private let surface = Color.white
 private let primary = Color(#colorLiteral(red: 0.23, green: 0.43, blue: 0.67, alpha: 1))
 private let border = Color(#colorLiteral(red: 0.78, green: 0.83, blue: 0.9, alpha: 1))
 
+// MARK: - Model
 struct Quiz: Identifiable {
     let id = UUID()
     let title: String
     let description: String
 }
 
+// MARK: - Quiz Detail View
 struct QuizDetailView: View {
     let quiz: Quiz
 
@@ -65,12 +68,57 @@ struct QuizDetailView: View {
             .navigationTitle(quiz.title)
             .background(appBackground)
         } else {
-            QuizView(questions: quizQuestions)
+            let progress = QuizProgressManager.shared.loadProgress(for: quiz)
+
+            if let progress, progress.isCompleted {
+                // Show review of answers
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        Text("You completed this quiz 🎉")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(primary)
+                            .padding(.top)
+
+                        ForEach(progress.answers, id: \.question) { answer in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(answer.question)
+                                    .font(.subheadline)
+                                    .bold()
+
+                                Text("Your Answer: \(answer.selectedAnswer)")
+                                    .foregroundColor(answer.isCorrect ? .green : .red)
+
+                                if !answer.isCorrect {
+                                    if let question = quizQuestions.first(where: { $0.question == answer.question }) {
+                                        Text("Correct Answer: \(question.correctAnswer)")
+                                            .foregroundColor(.gray)
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(surface)
+                                    .shadow(color: .white.opacity(0.6), radius: 4, x: -2, y: -2)
+                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 2, y: 2)
+                            )
+                        }
+                    }
+                    .padding()
+                }
+                .background(appBackground)
                 .navigationTitle(quiz.title)
+            } else {
+                // Show interactive quiz
+                QuizView(quiz: quiz, questions: quizQuestions)
+                    .navigationTitle(quiz.title)
+            }
         }
     }
 }
 
+// MARK: - Quiz List View
 struct QuizListView: View {
     let quizzes: [Quiz] = [
         Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
@@ -78,7 +126,7 @@ struct QuizListView: View {
         Quiz(title: "Handle Interruptions", description: "Train your assertiveness and flow."),
         Quiz(title: "Body Language Basics", description: "Non-verbal cues and posture awareness.")
     ]
-    
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -91,12 +139,24 @@ struct QuizListView: View {
 
                     ForEach(quizzes) { quiz in
                         let questionsAvailable = !QuizDetailView(quiz: quiz).quizQuestions.isEmpty
+                        let progress = QuizProgressManager.shared.loadProgress(for: quiz)
+                        let completed = progress?.isCompleted == true
 
                         NavigationLink(destination: QuizDetailView(quiz: quiz)) {
                             VStack(alignment: .leading, spacing: 6) {
-                                Text(quiz.title)
-                                    .font(.headline)
-                                    .foregroundColor(questionsAvailable ? primary : .gray)
+                                HStack {
+                                    Text(quiz.title)
+                                        .font(.headline)
+                                        .foregroundColor(completed ? .green : (questionsAvailable ? primary : .gray))
+
+                                    if completed {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.green)
+                                            .imageScale(.small)
+                                            .padding(.leading, 4)
+                                    }
+                                }
+
                                 Text(quiz.description)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)

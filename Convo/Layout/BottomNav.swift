@@ -15,20 +15,20 @@ struct BottomNavigation: View {
                     Label("Quizzes", systemImage: "list.bullet.rectangle.portrait")
                 }
 
-//            PracticeMissionsView()
-//                .tabItem {
-//                    Label("Practice", systemImage: "figure.walk")
-//                }
-//
-//            ReflectionLogView()
-//                .tabItem {
-//                    Label("Reflections", systemImage: "book.closed")
-//                }
+            SkillProgressView()
+                .tabItem {
+                    Label("Skills", systemImage: "figure.walk")
+                }
 //
 //            ProfileView()
 //                .tabItem {
 //                    Label("Profile", systemImage: "person.crop.circle")
 //                }
+            
+            UserSetupView()
+                .tabItem {
+                    Label("Setup", systemImage: "person.crop.circle")
+                }
         }
         .accentColor(.blue) // Customize to match Convo brand
     }
