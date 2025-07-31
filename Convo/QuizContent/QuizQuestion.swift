@@ -65,13 +65,22 @@ class QuizProgressManager {
     func resetAllProgress() {
         let defaults = UserDefaults.standard
         for key in defaults.dictionaryRepresentation().keys {
-            if key.hasPrefix("quiz_progress_") {
+            if key.hasPrefix(keyPrefix) {
                 defaults.removeObject(forKey: key)
             }
         }
     }
+    
+    func allProgress() -> [QuizProgress] {
+        UserDefaults.standard.dictionaryRepresentation().compactMap { key, value in
+            guard key.hasPrefix(keyPrefix),
+                  let data = value as? Data,
+                  let decoded = try? JSONDecoder().decode(QuizProgress.self, from: data)
+            else { return nil }
+            return decoded
+        }
+    }
 }
-
 
 struct QuizQuestion: Identifiable {
     let id = UUID()

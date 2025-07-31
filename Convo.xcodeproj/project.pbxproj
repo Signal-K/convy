@@ -12,6 +12,7 @@
 		B53E22D52E23F05C00FC1A3A /* BottomNav.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E22D42E23F05700FC1A3A /* BottomNav.swift */; };
 		B53E22D72E23F0DF00FC1A3A /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53E22D62E23F0DD00FC1A3A /* AppView.swift */; };
 		B559F4CF2E23B7F90014866E /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = B559F4CE2E23B7F90014866E /* Supabase */; };
+		B55CAE8C2E3B12B3000FAB51 /* ProgressOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55CAE8B2E3B12AE000FAB51 /* ProgressOverview.swift */; };
 		B560088B2E24A92D000558F8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088A2E24A92C000558F8 /* ProfileView.swift */; };
 		B560088D2E24AA4B000558F8 /* ConvoInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560088C2E24AA49000558F8 /* ConvoInputField.swift */; };
 		B57B2A4B2E28C3060026D549 /* ShopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B2A4A2E28C3040026D549 /* ShopModels.swift */; };
@@ -43,6 +44,7 @@
 		B53E22D12E23ED6100FC1A3A /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		B53E22D42E23F05700FC1A3A /* BottomNav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNav.swift; sourceTree = "<group>"; };
 		B53E22D62E23F0DD00FC1A3A /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		B55CAE8B2E3B12AE000FAB51 /* ProgressOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressOverview.swift; sourceTree = "<group>"; };
 		B560088A2E24A92C000558F8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B560088C2E24AA49000558F8 /* ConvoInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoInputField.swift; sourceTree = "<group>"; };
 		B57B2A4A2E28C3040026D549 /* ShopModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopModels.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		B5CFD8662DFE40BD00A4E6E4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B55CAE8B2E3B12AE000FAB51 /* ProgressOverview.swift */,
 				B57B2A4C2E28C4F60026D549 /* Shop */,
 				B53E22D62E23F0DD00FC1A3A /* AppView.swift */,
 				B53E22CE2E23EAC800FC1A3A /* QuizList.swift */,
@@ -324,6 +327,7 @@
 				B53E22D22E23ED6400FC1A3A /* QuizQuestion.swift in Sources */,
 				B59E6D512E25B10E00FFC42C /* UserProgress.swift in Sources */,
 				B53E22CF2E23EACE00FC1A3A /* QuizList.swift in Sources */,
+				B55CAE8C2E3B12B3000FAB51 /* ProgressOverview.swift in Sources */,
 				B53E22D52E23F05C00FC1A3A /* BottomNav.swift in Sources */,
 				B59E6D562E25B4B400FFC42C /* FullCalendar.swift in Sources */,
 				B59E6D492E25447F00FFC42C /* UserSetup.swift in Sources */,
@@ -492,6 +496,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Convo/Preview Content\"";
+				DEVELOPMENT_TEAM = NDP87SHHDT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -520,6 +525,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Convo/Preview Content\"";
+				DEVELOPMENT_TEAM = NDP87SHHDT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
