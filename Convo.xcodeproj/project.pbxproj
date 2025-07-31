@@ -24,6 +24,7 @@
 		B59E6D512E25B10E00FFC42C /* UserProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D502E25B10900FFC42C /* UserProgress.swift */; };
 		B59E6D532E25B37100FFC42C /* StreakCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D522E25B36D00FFC42C /* StreakCalendar.swift */; };
 		B59E6D562E25B4B400FFC42C /* FullCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59E6D552E25B4B000FFC42C /* FullCalendar.swift */; };
+		B5A7EEF72E3B4B4A00E1E4DC /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A7EEF62E3B4B4900E1E4DC /* ThemeManager.swift */; };
 		B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */; };
 		B5CFD83A2DFE2C4D00A4E6E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */; };
 		B5CFD83C2DFE2C4E00A4E6E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CFD83B2DFE2C4E00A4E6E4 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		B59E6D502E25B10900FFC42C /* UserProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProgress.swift; sourceTree = "<group>"; };
 		B59E6D522E25B36D00FFC42C /* StreakCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakCalendar.swift; sourceTree = "<group>"; };
 		B59E6D552E25B4B000FFC42C /* FullCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullCalendar.swift; sourceTree = "<group>"; };
+		B5A7EEF62E3B4B4900E1E4DC /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		B5CFD8342DFE2C4D00A4E6E4 /* Convo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Convo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CFD8372DFE2C4D00A4E6E4 /* ConvoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvoApp.swift; sourceTree = "<group>"; };
 		B5CFD8392DFE2C4D00A4E6E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		B57B2A492E28C2FF0026D549 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B5A7EEF62E3B4B4900E1E4DC /* ThemeManager.swift */,
 				B57B2A4A2E28C3040026D549 /* ShopModels.swift */,
 			);
 			path = Models;
@@ -332,6 +335,7 @@
 				B5CFD8382DFE2C4D00A4E6E4 /* ConvoApp.swift in Sources */,
 				B5CFD86C2DFE40ED00A4E6E4 /* CustomTextField.swift in Sources */,
 				B59E6D452E253FB000FFC42C /* QuizResult.swift in Sources */,
+				B5A7EEF72E3B4B4A00E1E4DC /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -84,6 +84,7 @@ struct QuizQuestion: Identifiable {
     let question: String
     let answers: [String]
     let correctAnswer: String
+    let mainSkill: String
 //    let reasoning: String
 //    let skillsGained: [(name: String, description: String)]
 }
@@ -100,11 +101,14 @@ struct QuizView: View {
 
     @State private var progress: QuizProgress
     
+    // Store shuffled answers for current question
+    @State private var shuffledAnswers: [String] = []
+    
     init(quiz: Quiz, questions: [QuizQuestion]) {
         self.quiz = quiz
         self.questions = questions
         
-        // Load saved progress or create new save for the [selected] quiz
+        // Load saved progress or create new
         if let existing = QuizProgressManager.shared.loadProgress(for: quiz) {
             _progress = State(initialValue: existing)
         } else {
@@ -114,38 +118,45 @@ struct QuizView: View {
                 totalQuestions: questions.count
             ))
         }
+        
+        // Initially empty, will be set in onAppear or update logic below
+        _shuffledAnswers = State(initialValue: [])
     }
     
     var body: some View {
         if isComplete {
-            QuizResultView(score: progress.correctCount, total: questions.count) {
-                dismiss()
-            }
+            QuizResultView(
+                score: progress.correctCount,
+                total: questions.count,
+                incorrectAnswers: progress.answers.filter { !$0.isCorrect },
+                onDismiss: {
+                    dismiss()
+                }
+            )
         } else {
             let currentQuestion = questions[currentQuestionIndex]
-
+            
             VStack(spacing: 20) {
                 Text("Question \(currentQuestionIndex + 1) of \(questions.count)")
                     .font(.headline)
                     .foregroundColor(.gray)
-
+                
                 Text(currentQuestion.question)
                     .font(.title3)
                     .padding()
-
-                ForEach(currentQuestion.answers, id: \.self) { answer in
+                
+                // Display shuffled answers
+                ForEach(shuffledAnswers, id: \.self) { answer in
                     Button(action: {
                         selectedAnswer = answer
                         showNext = true
-
-                        let isCorrect = (answer == currentQuestion.correctAnswer)
+                        
                         let quizAnswer = QuizAnswer(
                             question: currentQuestion.question,
                             selectedAnswer: answer,
                             correctAnswer: currentQuestion.correctAnswer
                         )
-
-                        // Save answer to progress
+                        
                         progress.answers.append(quizAnswer)
                         QuizProgressManager.shared.saveProgress(for: quiz, progress: progress)
                     }) {
@@ -161,13 +172,14 @@ struct QuizView: View {
                         )
                     }
                 }
-
+                
                 if showNext {
                     Button(action: {
                         if currentQuestionIndex < questions.count - 1 {
                             currentQuestionIndex += 1
                             selectedAnswer = nil
                             showNext = false
+                            shuffleCurrentAnswers()
                         } else {
                             isComplete = true
                         }
@@ -182,10 +194,18 @@ struct QuizView: View {
                     }
                     .padding(.top, 10)
                 }
-
+                
                 Spacer()
             }
             .padding()
+            .onAppear {
+                shuffleCurrentAnswers()
+            }
         }
+    }
+    
+    // Helper to shuffle answers for current question
+    private func shuffleCurrentAnswers() {
+        shuffledAnswers = questions[currentQuestionIndex].answers.shuffled()
     }
 }

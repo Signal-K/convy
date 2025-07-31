@@ -42,6 +42,18 @@ struct QuizDetailView: View {
             let progress = QuizProgressManager.shared.loadProgress(for: quiz)
 
             if let progress, progress.isCompleted {
+                // Calculate stats grouped by skill
+                let answersBySkill = Dictionary(grouping: progress.answers) { answer in
+                    quizQuestions.first(where: { $0.question == answer.question })?.mainSkill ?? "Unknown Skill"
+                }
+
+                let skillStats: [(skill: String, correct: Int, wrong: Int)] = answersBySkill.map { (skill, answers) in
+                    let correctCount = answers.filter { $0.isCorrect }.count
+                    let wrongCount = answers.count - correctCount
+                    return (skill, correctCount, wrongCount)
+                }
+                .sorted { $0.skill < $1.skill }
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
                         Text("You completed this quiz 🎉")
@@ -55,6 +67,13 @@ struct QuizDetailView: View {
                                 Text(answer.question)
                                     .font(.subheadline)
                                     .bold()
+
+                                if let question = quizQuestions.first(where: { $0.question == answer.question }) {
+                                    Text("Skill: \(question.mainSkill)")
+                                        .font(.caption)
+                                        .italic()
+                                        .foregroundColor(.secondary)
+                                }
 
                                 Text("Your Answer: \(answer.selectedAnswer)")
                                     .foregroundColor(answer.isCorrect ? .green : .red)
@@ -74,6 +93,27 @@ struct QuizDetailView: View {
                                     .shadow(color: .black.opacity(0.1), radius: 4, x: 2, y: 2)
                             )
                         }
+
+                        Divider()
+                            .padding(.vertical)
+
+                        Text("Summary by Skill")
+                            .font(.headline)
+                            .padding(.bottom, 4)
+
+                        ForEach(skillStats, id: \.skill) { stat in
+                            HStack {
+                                Text(stat.skill)
+                                    .font(.subheadline)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                Text("✅ \(stat.correct)")
+                                    .foregroundColor(.green)
+
+                                Text("❌ \(stat.wrong)")
+                                    .foregroundColor(.red)
+                            }
+                        }
                     }
                     .padding()
                 }
@@ -90,13 +130,57 @@ struct QuizDetailView: View {
 struct QuizListView: View {
     @StateObject private var progressManager = QuizProgressManager.shared
     @State private var resetConfirmationShown = false
+    
+    @AppStorage("preferredSkill") private var preferredSkill: String?
+    
+    // Returns dictionary: skill -> (wrong, total) counts based on progress
+    private func skillWeakness() -> [String: (wrong: Int, total: Int)] {
+        var result = [String: (wrong: Int, total: Int)]()
+        
+        for quiz in quizzes {
+            guard let progress = QuizProgressManager.shared.loadProgress(for: quiz) else { continue }
+            let questions = QuizContent.all[quiz.title] ?? []
+            for answer in progress.answers {
+                guard let question = questions.first(where: { $0.question == answer.question }) else { continue }
+                let skill = question.mainSkill
+                var current = result[skill] ?? (0, 0)
+                current.total += 1
+                if !answer.isCorrect {
+                    current.wrong += 1
+                }
+                result[skill] = current
+            }
+        }
+        
+        return result
+    }
 
+    // Calculate weakness % for skill (0 to 1), or nil if no data
+    private func weaknessPercentage(for skill: String, skillStats: [String: (wrong: Int, total: Int)]) -> Double? {
+        guard let stats = skillStats[skill], stats.total > 0 else { return nil }
+        return Double(stats.wrong) / Double(stats.total)
+    }
+
+    // Get all skills and their counts in a quiz
+    private func dominantSkills(for quiz: Quiz) -> [String: Int] {
+        let questions = QuizContent.all[quiz.title] ?? []
+        let grouped = Dictionary(grouping: questions, by: { $0.mainSkill })
+        return grouped.mapValues { $0.count }
+    }
+
+    // Check if quiz contains given skill
+    private func quizContainsSkill(_ quiz: Quiz, skill: String) -> Bool {
+        let questions = QuizContent.all[quiz.title] ?? []
+        return questions.contains(where: { $0.mainSkill == skill })
+    }
+
+
+    // Now matches exactly the keys in QuizContent.all
     let quizzes: [Quiz] = [
         Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
-        Quiz(title: "Express Yourself", description: "Work on tone, emotion, and clarity."),
-        Quiz(title: "Handle Interruptions", description: "Train your assertiveness and flow."),
-        Quiz(title: "Body Language Basics", description: "Non-verbal cues and posture awareness."),
-        Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence.")
+        Quiz(title: "Turning an acquaintance to a friend", description: "Learn how to go from stranger to friend."),
+        Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence."),
+        Quiz(title: "Dealing with Awkward Moments", description: "Gracefully handle unexpected or uncomfortable situations.")
     ]
 
     let dateFormatter: DateFormatter = {
@@ -105,6 +189,59 @@ struct QuizListView: View {
         formatter.timeStyle = .short
         return formatter
     }()
+
+    var incompleteQuizzes: [Quiz] {
+        let skillStats = skillWeakness()
+
+        // If preferred skill set and some incomplete quizzes have it
+        if let preferred = preferredSkill,
+           quizzes.contains(where: { quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }) {
+
+            // Quizzes with preferred skill first
+            let preferredSkillQuizzes = quizzes.filter {
+                quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
+            }
+
+            // Other incomplete quizzes without preferred skill
+            let otherQuizzes = quizzes.filter {
+                !quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
+            }
+
+            let orderedOthers = otherQuizzes.sorted { q1, q2 in
+                func quizWeaknessValue(_ quiz: Quiz) -> Double {
+                    let domSkills = dominantSkills(for: quiz)
+                    let maxWeakness = domSkills.compactMap { (skill, _) in
+                        weaknessPercentage(for: skill, skillStats: skillStats)
+                    }.max() ?? 0
+                    return maxWeakness
+                }
+                return quizWeaknessValue(q1) > quizWeaknessValue(q2)
+            }
+
+            return preferredSkillQuizzes + orderedOthers
+
+        } else {
+            // No preferred skill or no incomplete quizzes with preferred skill; sort all incomplete by weakness descending
+            return quizzes.filter { !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }
+                .sorted { q1, q2 in
+                    func quizWeaknessValue(_ quiz: Quiz) -> Double {
+                        let domSkills = dominantSkills(for: quiz)
+                        let maxWeakness = domSkills.compactMap { (skill, _) in
+                            weaknessPercentage(for: skill, skillStats: skillStats)
+                        }.max() ?? 0
+                        return maxWeakness
+                    }
+                    return quizWeaknessValue(q1) > quizWeaknessValue(q2)
+                }
+        }
+    }
+
+
+    var completedQuizzes: [Quiz] {
+        quizzes.filter { quiz in
+            QuizProgressManager.shared.loadProgress(for: quiz)?.isCompleted ?? false
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -116,70 +253,31 @@ struct QuizListView: View {
                         .foregroundColor(primary)
                         .padding(.top)
 
-                    ForEach(quizzes) { quiz in
-                        let _ = progressManager.progressVersion
-
-                        let questions = QuizContent.all[quiz.title] ?? []
-                        let progress = QuizProgressManager.shared.loadProgress(for: quiz)
-                        let isCompleted = progress?.isCompleted ?? false
-                        let hasQuestions = !questions.isEmpty
-
-                        let titleColor: Color = {
-                            if isCompleted { return .green }
-                            else if hasQuestions { return primary }
-                            else { return .gray }
-                        }()
-
-                        let completedDateText: String? = {
-                            if let date = progress?.completedDate, isCompleted {
-                                return dateFormatter.string(from: date)
-                            }
-                            return nil
-                        }()
-
-                        let labelView = VStack(alignment: .leading, spacing: 6) {
-                            HStack {
-                                Text(quiz.title)
-                                    .font(.headline)
-                                    .foregroundColor(titleColor)
-
-                                if isCompleted {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                        .imageScale(.small)
-                                        .padding(.leading, 4)
-                                }
-                            }
-
-                            Text(quiz.description)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-
-                            if let completedText = completedDateText {
-                                Text("Completed: \(completedText)")
-                                    .font(.caption)
-                                    .foregroundColor(.yellow)
+                    // Incomplete Quizzes
+                    if !incompleteQuizzes.isEmpty {
+                        VStack(alignment: .leading, spacing: 16) {
+                            ForEach(incompleteQuizzes) { quiz in
+                                quizRow(for: quiz)
                             }
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(surface)
-                                .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
-                                .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
-                        )
-
-                        NavigationLink(
-                            destination: QuizDetailView(quiz: quiz),
-                            label: {
-                                labelView
-                            }
-                        )
-                        .disabled(!hasQuestions)
                     }
 
-                    // Reset Button
+                    // Completed Quizzes
+                    if !completedQuizzes.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("Archived Quizzes")
+                                .font(.title2)
+                                .bold()
+                                .foregroundColor(.gray)
+                                .padding(.top, 32)
+
+                            ForEach(completedQuizzes) { quiz in
+                                quizRow(for: quiz)
+                            }
+                        }
+                    }
+
+                    // Reset All Progress
                     Button(role: .destructive) {
                         resetConfirmationShown = true
                     } label: {
@@ -201,7 +299,87 @@ struct QuizListView: View {
                 .padding(24)
             }
             .background(appBackground.ignoresSafeArea())
+            .navigationTitle("Quizzes")
         }
+    }
+
+    @ViewBuilder
+    private func quizRow(for quiz: Quiz) -> some View {
+        let _ = progressManager.progressVersion
+
+        let questions = QuizContent.all[quiz.title] ?? []
+        let progress = QuizProgressManager.shared.loadProgress(for: quiz)
+        let isCompleted = progress?.isCompleted ?? false
+        let hasQuestions = !questions.isEmpty
+
+        let titleColor: Color = {
+            if isCompleted { return .green }
+            else if hasQuestions { return primary }
+            else { return .gray }
+        }()
+
+        let completedDateText: String? = {
+            if let date = progress?.completedDate, isCompleted {
+                return dateFormatter.string(from: date)
+            }
+            return nil
+        }()
+
+        // Calculate dominant skill for this quiz
+        let dominantSkill: String? = {
+            guard !questions.isEmpty else { return nil }
+            let skillCounts = Dictionary(grouping: questions, by: { $0.mainSkill })
+                .mapValues { $0.count }
+            return skillCounts.max(by: { $0.value < $1.value })?.key
+        }()
+
+        let labelView = VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(quiz.title)
+                    .font(.headline)
+                    .foregroundColor(titleColor)
+
+                if isCompleted {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                        .imageScale(.small)
+                        .padding(.leading, 4)
+                }
+            }
+
+            Text(quiz.description)
+                .font(.subheadline)
+                .foregroundColor(.gray)
+
+            if let dominantSkill {
+                Text("Dominant Skill: \(dominantSkill)")
+                    .font(.caption)
+                    .italic()
+                    .foregroundColor(.secondary)
+            }
+
+            if let completedText = completedDateText {
+                Text("Completed: \(completedText)")
+                    .font(.caption)
+                    .foregroundColor(.yellow)
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(surface)
+                .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
+                .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
+        )
+
+        NavigationLink(
+            destination: QuizDetailView(quiz: quiz),
+            label: {
+                labelView
+            }
+        )
+        .disabled(!hasQuestions)
     }
 }
 

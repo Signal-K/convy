@@ -13,6 +13,11 @@ struct ShopItem: Identifiable, Codable, Equatable {
     let name: String
     let emoji: String
     let cost: Int
+    
+    // Equatable override so comparison is only by name
+    static func == (lhs: ShopItem, rhs: ShopItem) -> Bool {
+        lhs.name == rhs.name
+    }
 }
 
 class ShopData: ObservableObject {
@@ -35,11 +40,16 @@ class ShopData: ObservableObject {
     
     func buy(item: ShopItem) {
         guard goldPieces >= item.cost else { return }
-        goldPieces -= item.cost
-        ownedItems.append(item)
+        if !owns(item) {
+            goldPieces -= item.cost
+            ownedItems.append(item)
+        }
     }
     
     func owns(_ item: ShopItem) -> Bool {
-        ownedItems.contains(item)
+        if item.name == "Default" {
+            return true // Always own Default theme
+        }
+        return ownedItems.contains(item)
     }
 }
