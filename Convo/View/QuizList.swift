@@ -88,6 +88,7 @@ struct QuizDetailView: View {
 }
 
 struct QuizListView: View {
+    @StateObject private var progressManager = QuizProgressManager.shared
     @State private var resetConfirmationShown = false
 
     let quizzes: [Quiz] = [
@@ -97,6 +98,13 @@ struct QuizListView: View {
         Quiz(title: "Body Language Basics", description: "Non-verbal cues and posture awareness."),
         Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence.")
     ]
+
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     var body: some View {
         NavigationView {
@@ -109,39 +117,66 @@ struct QuizListView: View {
                         .padding(.top)
 
                     ForEach(quizzes) { quiz in
-                        let questionsAvailable = !(QuizContent.all[quiz.title] ?? []).isEmpty
+                        let _ = progressManager.progressVersion
+
+                        let questions = QuizContent.all[quiz.title] ?? []
                         let progress = QuizProgressManager.shared.loadProgress(for: quiz)
-                        let completed = progress?.isCompleted == true
+                        let isCompleted = progress?.isCompleted ?? false
+                        let hasQuestions = !questions.isEmpty
 
-                        NavigationLink(destination: QuizDetailView(quiz: quiz)) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                HStack {
-                                    Text(quiz.title)
-                                        .font(.headline)
-                                        .foregroundColor(completed ? .green : (questionsAvailable ? primary : .gray))
+                        let titleColor: Color = {
+                            if isCompleted { return .green }
+                            else if hasQuestions { return primary }
+                            else { return .gray }
+                        }()
 
-                                    if completed {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(.green)
-                                            .imageScale(.small)
-                                            .padding(.leading, 4)
-                                    }
-                                }
-
-                                Text(quiz.description)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                        let completedDateText: String? = {
+                            if let date = progress?.completedDate, isCompleted {
+                                return dateFormatter.string(from: date)
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(surface)
-                                    .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
-                                    .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
-                            )
+                            return nil
+                        }()
+
+                        let labelView = VStack(alignment: .leading, spacing: 6) {
+                            HStack {
+                                Text(quiz.title)
+                                    .font(.headline)
+                                    .foregroundColor(titleColor)
+
+                                if isCompleted {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                        .imageScale(.small)
+                                        .padding(.leading, 4)
+                                }
+                            }
+
+                            Text(quiz.description)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+
+                            if let completedText = completedDateText {
+                                Text("Completed: \(completedText)")
+                                    .font(.caption)
+                                    .foregroundColor(.yellow)
+                            }
                         }
-                        .disabled(!questionsAvailable)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(surface)
+                                .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
+                                .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
+                        )
+
+                        NavigationLink(
+                            destination: QuizDetailView(quiz: quiz),
+                            label: {
+                                labelView
+                            }
+                        )
+                        .disabled(!hasQuestions)
                     }
 
                     // Reset Button
@@ -162,7 +197,6 @@ struct QuizListView: View {
                         }
                         Button("Cancel", role: .cancel) {}
                     }
-
                 }
                 .padding(24)
             }

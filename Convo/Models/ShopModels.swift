@@ -16,7 +16,7 @@ struct ShopItem: Identifiable, Codable, Equatable {
 }
 
 class ShopData: ObservableObject {
-    @AppStorage("xpPoints") var xpPoints: Int = 0
+    @AppStorage("goldPieces") var goldPieces: Int = 0
     @AppStorage("ownedItemData") private var ownedItemData: Data = Data()
     
     @Published var ownedItems: [ShopItem] = [] {
@@ -34,8 +34,8 @@ class ShopData: ObservableObject {
     }
     
     func buy(item: ShopItem) {
-        guard xpPoints >= item.cost else { return }
-        xpPoints -= item.cost
+        guard goldPieces >= item.cost else { return }
+        goldPieces -= item.cost
         ownedItems.append(item)
     }
     

@@ -28,9 +28,21 @@ struct ShopView: View {
                     .foregroundColor(primary)
                     .padding(.top)
                 
-                Text("Gold pieces Available: \(shopData.goldPieces)")
-                    .font(.headline)
-                    .foregroundColor(.gray)
+                // Show gold pieces and completed quizzes as gold
+                HStack(spacing: 16) {
+                    Text("Gold Pieces: \(shopData.goldPieces)")
+                        .font(.headline)
+                        .foregroundColor(.yellow)
+                    HStack(spacing: 4) {
+                        ForEach(0..<shopData.completedQuizCount, id: \.self) { _ in
+                            Image(systemName: "circle.fill")
+                                .foregroundColor(.yellow)
+                        }
+                        Text("\(shopData.completedQuizCount) completed quizzes")
+                            .font(.subheadline)
+                            .foregroundColor(.yellow)
+                    }
+                }
                 
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Items for Sale")
@@ -42,7 +54,7 @@ struct ShopView: View {
                             Text("\(item.emoji) \(item.name)")
                                 .font(.body)
                             Spacer()
-                            Text("\(item.cost) Gold")
+                            Text("\(item.cost) Points")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                             

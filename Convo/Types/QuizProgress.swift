@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
 private let appBackground = Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1))
 private let surface = Color.white
@@ -27,7 +28,6 @@ struct QuizProgress: Codable {
     let quizTitle: String
     var answers: [QuizAnswer]
     var totalQuestions: Int
-    var completedDate: Date? // <-- Add this line
 
     var isCompleted: Bool {
         answers.count >= totalQuestions
@@ -41,16 +41,14 @@ struct QuizProgress: Codable {
 class QuizProgressManager: ObservableObject {
     static let shared = QuizProgressManager()
     private let keyPrefix = "quiz_progress_"
-
-    // Add something @Published if you want to trigger view updates
-    @Published var progressVersion = UUID()
+    @Published var progressVersion: Int = 0
 
     func saveProgress(for quiz: Quiz, progress: QuizProgress) {
         let key = keyPrefix + quiz.title
         if let encoded = try? JSONEncoder().encode(progress) {
             UserDefaults.standard.set(encoded, forKey: key)
+            progressVersion += 1
         }
-        progressVersion = UUID() // Triggers update when used in SwiftUI views
     }
 
     func loadProgress(for quiz: Quiz) -> QuizProgress? {
@@ -65,7 +63,7 @@ class QuizProgressManager: ObservableObject {
     func clearProgress(for quiz: Quiz) {
         let key = keyPrefix + quiz.title
         UserDefaults.standard.removeObject(forKey: key)
-        progressVersion = UUID()
+        progressVersion += 1
     }
 
     func resetAllProgress() {
@@ -75,9 +73,10 @@ class QuizProgressManager: ObservableObject {
                 defaults.removeObject(forKey: key)
             }
         }
-        progressVersion = UUID()
+        progressVersion += 1
     }
 }
+
 
 struct QuizQuestion: Identifiable {
     let id = UUID()
