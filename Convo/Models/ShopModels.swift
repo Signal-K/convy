@@ -8,15 +8,25 @@
 import Foundation
 import SwiftUI
 
-struct ShopItem: Identifiable, Codable, Equatable {
+struct ShopItem: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     let name: String
     let emoji: String
     let cost: Int
+
+    // Only compare by name for equality
+    static func == (lhs: ShopItem, rhs: ShopItem) -> Bool {
+        lhs.name == rhs.name
+    }
+
+    // Hash by name (so Set/Dictionary can work)
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
 }
 
 class ShopData: ObservableObject {
-    @AppStorage("xpPoints") var xpPoints: Int = 0
+    @AppStorage("goldPieces") var goldPieces: Int = 0
     @AppStorage("ownedItemData") private var ownedItemData: Data = Data()
     
     @Published var ownedItems: [ShopItem] = [] {
@@ -34,12 +44,17 @@ class ShopData: ObservableObject {
     }
     
     func buy(item: ShopItem) {
-        guard xpPoints >= item.cost else { return }
-        xpPoints -= item.cost
-        ownedItems.append(item)
+        guard goldPieces >= item.cost else { return }
+        if !owns(item) {
+            goldPieces -= item.cost
+            ownedItems.append(item)
+        }
     }
     
     func owns(_ item: ShopItem) -> Bool {
-        ownedItems.contains(item)
+        if item.name == "Default" {
+            return true // Always own Default theme
+        }
+        return ownedItems.contains(item)
     }
 }
