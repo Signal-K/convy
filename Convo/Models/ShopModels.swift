@@ -8,15 +8,20 @@
 import Foundation
 import SwiftUI
 
-struct ShopItem: Identifiable, Codable, Equatable {
+struct ShopItem: Identifiable, Codable, Equatable, Hashable {
     let id: UUID
     let name: String
     let emoji: String
     let cost: Int
-    
-    // Equatable override so comparison is only by name
+
+    // Only compare by name for equality
     static func == (lhs: ShopItem, rhs: ShopItem) -> Bool {
         lhs.name == rhs.name
+    }
+
+    // Hash by name (so Set/Dictionary can work)
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
     }
 }
 

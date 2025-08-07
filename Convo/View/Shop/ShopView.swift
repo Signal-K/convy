@@ -7,52 +7,22 @@
 
 import SwiftUI
 
-let defaultTheme = Theme(
-    name: "Default",
-    primary: Color(#colorLiteral(red: 0.23, green: 0.43, blue: 0.67, alpha: 1)),
-    appBackground: Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1)),
-    surface: Color.white
-)
-
-let darkTheme = Theme(
-    name: "Dark",
-    primary: Color.white,
-    appBackground: Color.black,
-    surface: Color.gray.opacity(0.2)
-)
-
-let bubblegumTheme = Theme(
-    name: "Bubblegum",
-    primary: Color.pink,
-    appBackground: Color(#colorLiteral(red: 1.0, green: 0.8, blue: 0.9, alpha: 1)),
-    surface: Color(#colorLiteral(red: 1, green: 0.7, blue: 0.8, alpha: 1))
-)
-
-let neonTheme = Theme(
-    name: "Neon",
-    primary: Color.green,
-    appBackground: Color.black,
-    surface: Color(#colorLiteral(red: 0.1, green: 0.1, blue: 0.1, alpha: 1))
-)
-
-let allThemes = [defaultTheme, darkTheme, bubblegumTheme, neonTheme]
-
 struct ShopView: View {
     @StateObject private var shopData = ShopData()
-    @ObservedObject private var themeManager = ThemeManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
     @AppStorage("activeTheme") private var activeTheme: String = "Default"
     
     let shopItems: [ShopItem] = [
-        ShopItem(id: UUID(), name: "Sunglasses", emoji: "🕶️", cost: 10),
-        ShopItem(id: UUID(), name: "Coffee", emoji: "☕", cost: 15),
-        ShopItem(id: UUID(), name: "Hat", emoji: "🧢", cost: 20)
+        ShopItem(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, name: "Sunglasses", emoji: "🕶️", cost: 10),
+        ShopItem(id: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, name: "Coffee", emoji: "☕", cost: 15),
+        ShopItem(id: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, name: "Hat", emoji: "🧢", cost: 20)
     ]
     
     let themes: [ShopItem] = [
-        ShopItem(id: UUID(), name: "Default", emoji: "🎨", cost: 0),
-        ShopItem(id: UUID(), name: "Dark", emoji: "🌙", cost: 4),
-        ShopItem(id: UUID(), name: "Bubblegum", emoji: "🍬", cost: 4),
-        ShopItem(id: UUID(), name: "Neon", emoji: "🌈", cost: 4)
+        ShopItem(id: UUID(uuidString: "11111111-0000-0000-0000-000000000001")!, name: "Default", emoji: "🎨", cost: 0),
+        ShopItem(id: UUID(uuidString: "11111111-0000-0000-0000-000000000002")!, name: "Dark", emoji: "🌙", cost: 4),
+        ShopItem(id: UUID(uuidString: "11111111-0000-0000-0000-000000000003")!, name: "Bubblegum", emoji: "🍬", cost: 4),
+        ShopItem(id: UUID(uuidString: "11111111-0000-0000-0000-000000000004")!, name: "Neon", emoji: "🌈", cost: 4)
     ]
     
     var body: some View {
@@ -78,6 +48,7 @@ struct ShopView: View {
                     .cornerRadius(8)
                 }
                 
+                // Items
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Items for Sale")
                         .font(.title3.bold())
@@ -94,6 +65,7 @@ struct ShopView: View {
                     }
                 }
                 
+                // Themes
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Customisation")
                         .font(.title3.bold())
@@ -103,14 +75,16 @@ struct ShopView: View {
                         HStack {
                             Text("\(themeItem.emoji) \(themeItem.name)")
                                 .font(.body)
+                            
                             Spacer()
+                            
                             if themeItem.cost > 0 {
                                 Text("\(themeItem.cost) Gold")
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
-                            
-                            if shopData.owns(themeItem) {
+
+                            if shopData.owns(themeItem) || themeItem.name == "Default" {
                                 Button(action: {
                                     activeTheme = themeItem.name
                                     if let selectedTheme = allThemes.first(where: { $0.name == themeItem.name }) {
@@ -152,12 +126,13 @@ struct ShopView: View {
                     }
                 }
                 
+                // Inventory
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Your Inventory")
                         .font(.title3.bold())
                         .foregroundColor(themeManager.primary)
                     
-                    let allOwned = shopData.ownedItems + themes.filter { $0.name == "Default" }
+                    let allOwned = Array(Set(shopData.ownedItems + [themes[0]])) // Default always in inventory
                     
                     if allOwned.isEmpty {
                         Text("You don't own anything yet.")
@@ -187,7 +162,7 @@ struct ShopView: View {
         }
         .background(themeManager.appBackground.ignoresSafeArea())
         .onAppear {
-            // Apply stored active theme on appear
+            // Apply stored theme
             if let themeToApply = allThemes.first(where: { $0.name == activeTheme }) {
                 themeManager.apply(theme: themeToApply)
             }
@@ -195,15 +170,13 @@ struct ShopView: View {
     }
 }
 
-// MARK: - ShopItemRow
-
 struct ShopItemRow: View {
     let item: ShopItem
     let owns: Bool
     let canAfford: Bool
     let onBuy: () -> Void
     
-    @ObservedObject private var themeManager = ThemeManager.shared
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         HStack {

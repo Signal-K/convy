@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-private let appBackground = Color(#colorLiteral(red: 0.96, green: 0.97, blue: 0.98, alpha: 1))
-private let surface = Color.white
-private let primary = Color(#colorLiteral(red: 0.23, green: 0.43, blue: 0.67, alpha: 1))
-private let border = Color(#colorLiteral(red: 0.78, green: 0.83, blue: 0.9, alpha: 1))
-
 struct Quiz: Identifiable {
     let id = UUID()
     let title: String
@@ -20,6 +15,7 @@ struct Quiz: Identifiable {
 
 struct QuizDetailView: View {
     let quiz: Quiz
+    @ObservedObject private var theme = ThemeManager.shared
 
     var quizQuestions: [QuizQuestion] {
         QuizContent.all[quiz.title] ?? []
@@ -28,7 +24,7 @@ struct QuizDetailView: View {
     var body: some View {
         if quizQuestions.isEmpty {
             VStack(spacing: 16) {
-                Text("This quiz doesn’t have any questions yet.")
+                Text("This quiz doesn't have any questions yet.")
                     .font(.title3)
                     .padding()
                     .multilineTextAlignment(.center)
@@ -37,12 +33,11 @@ struct QuizDetailView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle(quiz.title)
-            .background(appBackground)
+            .background(theme.appBackground)
         } else {
             let progress = QuizProgressManager.shared.loadProgress(for: quiz)
 
             if let progress, progress.isCompleted {
-                // Calculate stats grouped by skill
                 let answersBySkill = Dictionary(grouping: progress.answers) { answer in
                     quizQuestions.first(where: { $0.question == answer.question })?.mainSkill ?? "Unknown Skill"
                 }
@@ -59,7 +54,7 @@ struct QuizDetailView: View {
                         Text("You completed this quiz 🎉")
                             .font(.title2)
                             .bold()
-                            .foregroundColor(primary)
+                            .foregroundColor(theme.primary)
                             .padding(.top)
 
                         ForEach(progress.answers, id: \.question) { answer in
@@ -88,7 +83,7 @@ struct QuizDetailView: View {
                             .padding()
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .fill(surface)
+                                    .fill(theme.surface)
                                     .shadow(color: .white.opacity(0.6), radius: 4, x: -2, y: -2)
                                     .shadow(color: .black.opacity(0.1), radius: 4, x: 2, y: 2)
                             )
@@ -117,7 +112,7 @@ struct QuizDetailView: View {
                     }
                     .padding()
                 }
-                .background(appBackground)
+                .background(theme.appBackground)
                 .navigationTitle(quiz.title)
             } else {
                 QuizView(quiz: quiz, questions: quizQuestions)
@@ -130,13 +125,13 @@ struct QuizDetailView: View {
 struct QuizListView: View {
     @StateObject private var progressManager = QuizProgressManager.shared
     @State private var resetConfirmationShown = false
-    
+    @ObservedObject private var theme = ThemeManager.shared
+
     @AppStorage("preferredSkill") private var preferredSkill: String?
-    
-    // Returns dictionary: skill -> (wrong, total) counts based on progress
+
     private func skillWeakness() -> [String: (wrong: Int, total: Int)] {
         var result = [String: (wrong: Int, total: Int)]()
-        
+
         for quiz in quizzes {
             guard let progress = QuizProgressManager.shared.loadProgress(for: quiz) else { continue }
             let questions = QuizContent.all[quiz.title] ?? []
@@ -151,31 +146,26 @@ struct QuizListView: View {
                 result[skill] = current
             }
         }
-        
+
         return result
     }
 
-    // Calculate weakness % for skill (0 to 1), or nil if no data
     private func weaknessPercentage(for skill: String, skillStats: [String: (wrong: Int, total: Int)]) -> Double? {
         guard let stats = skillStats[skill], stats.total > 0 else { return nil }
         return Double(stats.wrong) / Double(stats.total)
     }
 
-    // Get all skills and their counts in a quiz
     private func dominantSkills(for quiz: Quiz) -> [String: Int] {
         let questions = QuizContent.all[quiz.title] ?? []
         let grouped = Dictionary(grouping: questions, by: { $0.mainSkill })
         return grouped.mapValues { $0.count }
     }
 
-    // Check if quiz contains given skill
     private func quizContainsSkill(_ quiz: Quiz, skill: String) -> Bool {
         let questions = QuizContent.all[quiz.title] ?? []
         return questions.contains(where: { $0.mainSkill == skill })
     }
 
-
-    // Now matches exactly the keys in QuizContent.all
     let quizzes: [Quiz] = [
         Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
         Quiz(title: "Turning an acquaintance to a friend", description: "Learn how to go from stranger to friend."),
@@ -193,16 +183,13 @@ struct QuizListView: View {
     var incompleteQuizzes: [Quiz] {
         let skillStats = skillWeakness()
 
-        // If preferred skill set and some incomplete quizzes have it
         if let preferred = preferredSkill,
            quizzes.contains(where: { quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }) {
 
-            // Quizzes with preferred skill first
             let preferredSkillQuizzes = quizzes.filter {
                 quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
             }
 
-            // Other incomplete quizzes without preferred skill
             let otherQuizzes = quizzes.filter {
                 !quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
             }
@@ -221,7 +208,6 @@ struct QuizListView: View {
             return preferredSkillQuizzes + orderedOthers
 
         } else {
-            // No preferred skill or no incomplete quizzes with preferred skill; sort all incomplete by weakness descending
             return quizzes.filter { !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }
                 .sorted { q1, q2 in
                     func quizWeaknessValue(_ quiz: Quiz) -> Double {
@@ -236,7 +222,6 @@ struct QuizListView: View {
         }
     }
 
-
     var completedQuizzes: [Quiz] {
         quizzes.filter { quiz in
             QuizProgressManager.shared.loadProgress(for: quiz)?.isCompleted ?? false
@@ -250,10 +235,9 @@ struct QuizListView: View {
                     Text("Available Quizzes")
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(primary)
+                        .foregroundColor(theme.primary)
                         .padding(.top)
 
-                    // Incomplete Quizzes
                     if !incompleteQuizzes.isEmpty {
                         VStack(alignment: .leading, spacing: 16) {
                             ForEach(incompleteQuizzes) { quiz in
@@ -262,7 +246,6 @@ struct QuizListView: View {
                         }
                     }
 
-                    // Completed Quizzes
                     if !completedQuizzes.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             Text("Archived Quizzes")
@@ -277,7 +260,6 @@ struct QuizListView: View {
                         }
                     }
 
-                    // Reset All Progress
                     Button(role: .destructive) {
                         resetConfirmationShown = true
                     } label: {
@@ -298,13 +280,14 @@ struct QuizListView: View {
                 }
                 .padding(24)
             }
-            .background(appBackground.ignoresSafeArea())
+            .background(theme.appBackground.ignoresSafeArea())
             .navigationTitle("Quizzes")
         }
     }
 
     @ViewBuilder
     private func quizRow(for quiz: Quiz) -> some View {
+        // Observe progress changes
         let _ = progressManager.progressVersion
 
         let questions = QuizContent.all[quiz.title] ?? []
@@ -314,7 +297,7 @@ struct QuizListView: View {
 
         let titleColor: Color = {
             if isCompleted { return .green }
-            else if hasQuestions { return primary }
+            else if hasQuestions { return theme.primary }
             else { return .gray }
         }()
 
@@ -325,7 +308,6 @@ struct QuizListView: View {
             return nil
         }()
 
-        // Calculate dominant skill for this quiz
         let dominantSkill: String? = {
             guard !questions.isEmpty else { return nil }
             let skillCounts = Dictionary(grouping: questions, by: { $0.mainSkill })
@@ -368,7 +350,7 @@ struct QuizListView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(surface)
+                .fill(theme.surface)
                 .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
                 .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
         )

@@ -7,7 +7,7 @@ private let border = Color(#colorLiteral(red: 0.78, green: 0.83, blue: 0.9, alph
 
 struct QuizResultView: View {
     let score: Int
-    let total: Int // You might keep this for other uses, but won't display it directly here
+    let total: Int
     let incorrectAnswers: [QuizAnswer]
     let onDismiss: () -> Void
     
@@ -55,6 +55,7 @@ struct QuizResultView: View {
                 Text(feedbackText)
                     .font(.title)
                     .bold()
+                    .foregroundColor(primary)
                 
                 Text("You got \(score) out of \(score + incorrectAnswers.count) correct")
                     .font(.subheadline)
@@ -71,6 +72,7 @@ struct QuizResultView: View {
                                 Text(answer.question)
                                     .font(.subheadline)
                                     .bold()
+                                    .foregroundColor(primary)
                                 
                                 Text("Your Answer: \(answer.selectedAnswer)")
                                     .foregroundColor(.red)
@@ -82,7 +84,8 @@ struct QuizResultView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 12)
                                     .fill(surface)
-                                    .shadow(color: .black.opacity(0.05), radius: 4, x: 2, y: 2)
+                                    .shadow(color: .white.opacity(0.6), radius: 4, x: -2, y: -2)
+                                    .shadow(color: .black.opacity(0.1), radius: 4, x: 2, y: 2)
                             )
                         }
                     }
