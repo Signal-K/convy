@@ -109,6 +109,21 @@ struct QuizDetailView: View {
                                     .foregroundColor(.red)
                             }
                         }
+
+                        Button("Redo Quiz") {
+                            QuizProgressManager.shared.clearProgress(for: quiz)
+                            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                               let rootNav = windowScene.windows.first?.rootViewController as? UINavigationController {
+                                let newView = QuizView(quiz: quiz, questions: quizQuestions)
+                                let hosting = UIHostingController(rootView: newView)
+                                rootNav.pushViewController(hosting, animated: true)
+                            }
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(theme.primary)
+                        .foregroundColor(.white)
+                        .cornerRadius(12)
                     }
                     .padding()
                 }
@@ -129,9 +144,25 @@ struct QuizListView: View {
 
     @AppStorage("preferredSkill") private var preferredSkill: String?
 
+    @State private var pushDailyQuiz: Quiz?
+    @State private var pushDetailQuiz: Quiz?
+
+    let quizzes: [Quiz] = [
+        Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
+        Quiz(title: "Turning an acquaintance to a friend", description: "Learn how to go from stranger to friend."),
+        Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence."),
+        Quiz(title: "Dealing with Awkward Moments", description: "Gracefully handle unexpected or uncomfortable situations.")
+    ]
+
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
+    }()
+
     private func skillWeakness() -> [String: (wrong: Int, total: Int)] {
         var result = [String: (wrong: Int, total: Int)]()
-
         for quiz in quizzes {
             guard let progress = QuizProgressManager.shared.loadProgress(for: quiz) else { continue }
             let questions = QuizContent.all[quiz.title] ?? []
@@ -140,13 +171,10 @@ struct QuizListView: View {
                 let skill = question.mainSkill
                 var current = result[skill] ?? (0, 0)
                 current.total += 1
-                if !answer.isCorrect {
-                    current.wrong += 1
-                }
+                if !answer.isCorrect { current.wrong += 1 }
                 result[skill] = current
             }
         }
-
         return result
     }
 
@@ -166,34 +194,16 @@ struct QuizListView: View {
         return questions.contains(where: { $0.mainSkill == skill })
     }
 
-    let quizzes: [Quiz] = [
-        Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
-        Quiz(title: "Turning an acquaintance to a friend", description: "Learn how to go from stranger to friend."),
-        Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence."),
-        Quiz(title: "Dealing with Awkward Moments", description: "Gracefully handle unexpected or uncomfortable situations.")
-    ]
-
-    let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }()
-
     var incompleteQuizzes: [Quiz] {
         let skillStats = skillWeakness()
-
         if let preferred = preferredSkill,
            quizzes.contains(where: { quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }) {
-
             let preferredSkillQuizzes = quizzes.filter {
                 quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
             }
-
             let otherQuizzes = quizzes.filter {
                 !quizContainsSkill($0, skill: preferred) && !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false)
             }
-
             let orderedOthers = otherQuizzes.sorted { q1, q2 in
                 func quizWeaknessValue(_ quiz: Quiz) -> Double {
                     let domSkills = dominantSkills(for: quiz)
@@ -204,9 +214,7 @@ struct QuizListView: View {
                 }
                 return quizWeaknessValue(q1) > quizWeaknessValue(q2)
             }
-
             return preferredSkillQuizzes + orderedOthers
-
         } else {
             return quizzes.filter { !(QuizProgressManager.shared.loadProgress(for: $0)?.isCompleted ?? false) }
                 .sorted { q1, q2 in
@@ -232,6 +240,11 @@ struct QuizListView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
+                    QuizOfTheDayView(quizzes: quizzes) { q in
+                        QuizProgressManager.shared.clearProgress(for: q)
+                        pushDailyQuiz = q
+                    }
+
                     Text("Available Quizzes")
                         .font(.largeTitle)
                         .bold()
@@ -277,23 +290,56 @@ struct QuizListView: View {
                         }
                         Button("Cancel", role: .cancel) {}
                     }
+
+                    // Fixed NavigationLinks with ViewBuilder returning some View
+                    NavigationLink(
+                        destination: Group {
+                            if let quiz = pushDailyQuiz {
+                                QuizView(quiz: quiz, questions: QuizContent.all[quiz.title] ?? [])
+                            } else {
+                                EmptyView()
+                            }
+                        },
+                        isActive: Binding(
+                            get: { pushDailyQuiz != nil },
+                            set: { isActive in if !isActive { pushDailyQuiz = nil } }
+                        )
+                    ) { EmptyView() }
+                    .hidden()
+
+                    NavigationLink(
+                        destination: Group {
+                            if let quiz = pushDetailQuiz {
+                                QuizDetailView(quiz: quiz)
+                            } else {
+                                EmptyView()
+                            }
+                        },
+                        isActive: Binding(
+                            get: { pushDetailQuiz != nil },
+                            set: { isActive in if !isActive { pushDetailQuiz = nil } }
+                        )
+                    ) { EmptyView() }
+                    .hidden()
                 }
                 .padding(24)
             }
             .background(theme.appBackground.ignoresSafeArea())
             .navigationTitle("Quizzes")
+            .toolbarBackground(theme.surface, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
         }
     }
 
     @ViewBuilder
     private func quizRow(for quiz: Quiz) -> some View {
-        // Observe progress changes
         let _ = progressManager.progressVersion
 
         let questions = QuizContent.all[quiz.title] ?? []
         let progress = QuizProgressManager.shared.loadProgress(for: quiz)
         let isCompleted = progress?.isCompleted ?? false
         let hasQuestions = !questions.isEmpty
+        let isDaily = QuizOfTheDayManager.shared.isQuizOfTheDay(quiz, in: quizzes)
 
         let titleColor: Color = {
             if isCompleted { return .green }
@@ -316,11 +362,18 @@ struct QuizListView: View {
         }()
 
         let labelView = VStack(alignment: .leading, spacing: 6) {
-            HStack {
+            HStack(spacing: 8) {
                 Text(quiz.title)
                     .font(.headline)
                     .foregroundColor(titleColor)
-
+                if isDaily {
+                    Text("Today")
+                        .font(.caption2.bold())
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.yellow.opacity(0.25))
+                        .cornerRadius(6)
+                }
                 if isCompleted {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
@@ -351,16 +404,24 @@ struct QuizListView: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(theme.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(isDaily ? Color.yellow.opacity(0.6) : Color.clear, lineWidth: 2)
+                )
                 .shadow(color: .white.opacity(0.7), radius: 6, x: -4, y: -4)
                 .shadow(color: .black.opacity(0.08), radius: 6, x: 4, y: 4)
         )
 
-        NavigationLink(
-            destination: QuizDetailView(quiz: quiz),
-            label: {
-                labelView
+        Button {
+            if isDaily {
+                QuizProgressManager.shared.clearProgress(for: quiz)
+                pushDailyQuiz = quiz
+            } else {
+                pushDetailQuiz = quiz
             }
-        )
+        } label: {
+            labelView
+        }
         .disabled(!hasQuestions)
     }
 }

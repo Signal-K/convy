@@ -12,7 +12,7 @@ struct QuizAnswer: Codable {
     let question: String
     let selectedAnswer: String
     let correctAnswer: String
-    
+
     var isCorrect: Bool {
         selectedAnswer == correctAnswer
     }
@@ -71,7 +71,7 @@ class QuizProgressManager: ObservableObject {
         }
         progressVersion = UUID()
     }
-    
+
     func allProgress() -> [QuizProgress] {
         UserDefaults.standard.dictionaryRepresentation().compactMap { key, value in
             guard key.hasPrefix(keyPrefix),
@@ -94,35 +94,35 @@ struct QuizQuestion: Identifiable {
 struct QuizView: View {
     let quiz: Quiz
     let questions: [QuizQuestion]
-    
+
     @State private var currentQuestionIndex = 0
     @State private var selectedAnswer: String? = nil
     @State private var showNext = false
     @State private var isComplete = false
     @Environment(\.dismiss) private var dismiss
-    
+
     @State private var progress: QuizProgress
     @State private var shuffledAnswers: [String] = []
-    
-    // Use ThemeManager instead of UserColorScheme
+
     @ObservedObject private var theme = ThemeManager.shared
-    
+
     init(quiz: Quiz, questions: [QuizQuestion]) {
         self.quiz = quiz
         self.questions = questions
-        
+
         if let existing = QuizProgressManager.shared.loadProgress(for: quiz) {
             _progress = State(initialValue: existing)
         } else {
             _progress = State(initialValue: QuizProgress(
                 quizTitle: quiz.title,
                 answers: [],
-                totalQuestions: questions.count
+                totalQuestions: questions.count,
+                completedDate: nil
             ))
         }
         _shuffledAnswers = State(initialValue: [])
     }
-    
+
     var body: some View {
         Group {
             if isComplete {
@@ -130,18 +130,16 @@ struct QuizView: View {
                     score: progress.correctCount,
                     total: questions.count,
                     incorrectAnswers: progress.answers.filter { !$0.isCorrect },
-                    onDismiss: {
-                        dismiss()
-                    }
+                    onDismiss: { dismiss() }
                 )
             } else {
                 let currentQuestion = questions[currentQuestionIndex]
-                
+
                 VStack(spacing: 20) {
                     Text("Question \(currentQuestionIndex + 1) of \(questions.count)")
                         .font(.headline)
                         .foregroundColor(.gray)
-                    
+
                     Text(currentQuestion.question)
                         .font(.title3)
                         .fontWeight(.semibold)
@@ -154,14 +152,14 @@ struct QuizView: View {
                         .shadow(color: .white.opacity(0.8), radius: 4, x: -2, y: -2)
                         .shadow(color: .black.opacity(0.1), radius: 4, x: 2, y: 2)
                         .padding(.horizontal)
-                    
+
                     VStack(spacing: 16) {
                         ForEach(shuffledAnswers, id: \.self) { answer in
                             answerButton(for: answer, currentQuestion: currentQuestion)
                         }
                     }
                     .padding(.horizontal)
-                    
+
                     if showNext {
                         Button(action: {
                             if currentQuestionIndex < questions.count - 1 {
@@ -170,6 +168,11 @@ struct QuizView: View {
                                 showNext = false
                                 shuffleCurrentAnswers()
                             } else {
+                                var finished = progress
+                                finished.completedDate = Date()
+                                progress = finished
+                                QuizProgressManager.shared.saveProgress(for: quiz, progress: finished)
+                                QuizOfTheDayManager.shared.awardBonusIfEligible(for: quiz, in: allQuizzesStatic())
                                 isComplete = true
                             }
                         }) {
@@ -186,28 +189,25 @@ struct QuizView: View {
                         }
                         .padding([.horizontal, .top])
                     }
-                    
+
                     Spacer()
                 }
                 .padding(.vertical)
                 .background(theme.appBackground.ignoresSafeArea())
-                .onAppear {
-                    shuffleCurrentAnswers()
-                }
+                .onAppear { shuffleCurrentAnswers() }
             }
         }
     }
-    
+
     private func shuffleCurrentAnswers() {
         guard currentQuestionIndex < questions.count else { return }
         shuffledAnswers = questions[currentQuestionIndex].answers.shuffled()
     }
-    
+
     private func answerButton(for answer: String, currentQuestion: QuizQuestion) -> some View {
-        // Capture values to avoid closure retention issues
         let currentAnswer = answer
         let question = currentQuestion
-        
+
         return AnswerButton(
             answer: currentAnswer,
             currentQuestion: question,
@@ -215,30 +215,27 @@ struct QuizView: View {
             showNext: showNext,
             primary: theme.primary,
             surface: theme.surface,
-            border: Color.gray.opacity(0.3) // Add a border color since ThemeManager doesn't have one
-        ) { [quiz] in  // Explicitly capture quiz
-            // Guard against multiple taps and ensure we're still on the right question
+            border: Color.gray.opacity(0.3)
+        ) { [quiz] in
             guard !showNext,
                   currentQuestionIndex < questions.count,
                   questions[currentQuestionIndex].id == question.id else {
                 return
             }
-            
+
             selectedAnswer = currentAnswer
             showNext = true
-            
+
             let quizAnswer = QuizAnswer(
                 question: question.question,
                 selectedAnswer: currentAnswer,
                 correctAnswer: question.correctAnswer
             )
-            
-            // Create a new progress instance to avoid mutation issues
+
             var newProgress = progress
             newProgress.answers.append(quizAnswer)
             progress = newProgress
-            
-            // Save progress on main thread
+
             DispatchQueue.main.async {
                 QuizProgressManager.shared.saveProgress(for: quiz, progress: newProgress)
             }
@@ -252,16 +249,16 @@ struct AnswerButton: View {
     let currentQuestion: QuizQuestion
     let selectedAnswer: String?
     let showNext: Bool
-    
+
     let primary: Color
     let surface: Color
     let border: Color
-    
+
     let action: () -> Void
-    
+
     var body: some View {
         let imageName = systemImageName(for: answer, currentQuestion: currentQuestion, showNext: showNext, selectedAnswer: selectedAnswer)
-        
+
         Button(action: action) {
             HStack {
                 Text(answer)
@@ -289,7 +286,7 @@ struct AnswerButton: View {
         .shadow(color: .white.opacity(0.7), radius: 3, x: -2, y: -2)
         .shadow(color: .black.opacity(0.1), radius: 3, x: 2, y: 2)
     }
-    
+
     private func systemImageName(for answer: String, currentQuestion: QuizQuestion, showNext: Bool, selectedAnswer: String?) -> String {
         if !showNext {
             return ""
@@ -301,4 +298,14 @@ struct AnswerButton: View {
             return ""
         }
     }
+}
+
+// Utility to provide the full quiz list to QuizView for bonus check.
+private func allQuizzesStatic() -> [Quiz] {
+    [
+        Quiz(title: "Start a Conversation", description: "Practice icebreakers and small talk."),
+        Quiz(title: "Turning an acquaintance to a friend", description: "Learn how to go from stranger to friend."),
+        Quiz(title: "Deepening Intimacy", description: "Build emotional connection and presence."),
+        Quiz(title: "Dealing with Awkward Moments", description: "Gracefully handle unexpected or uncomfortable situations.")
+    ]
 }

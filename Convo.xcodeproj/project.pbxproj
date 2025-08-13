@@ -38,6 +38,7 @@
 		B5CFD8722DFE73E800A4E6E4 /* PostgREST in Frameworks */ = {isa = PBXBuildFile; productRef = B5CFD8712DFE73E800A4E6E4 /* PostgREST */; };
 		B5CFD8742DFE73E800A4E6E4 /* Realtime in Frameworks */ = {isa = PBXBuildFile; productRef = B5CFD8732DFE73E800A4E6E4 /* Realtime */; };
 		B5CFD8762DFE73E800A4E6E4 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = B5CFD8752DFE73E800A4E6E4 /* Storage */; };
+		B5F6ED4F2E4C7BCC00547051 /* QuizOfTheDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F6ED4E2E4C7BC700547051 /* QuizOfTheDay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		B5CFD8642DFE40AC00A4E6E4 /* Supabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Supabase.swift; sourceTree = "<group>"; };
 		B5CFD8682DFE40CC00A4E6E4 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		B5CFD86B2DFE40ED00A4E6E4 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		B5F6ED4E2E4C7BC700547051 /* QuizOfTheDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOfTheDay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +203,7 @@
 		B5CFD8662DFE40BD00A4E6E4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B5F6ED4E2E4C7BC700547051 /* QuizOfTheDay.swift */,
 				B55CAE8B2E3B12AE000FAB51 /* ProgressOverview.swift */,
 				B57B2A4C2E28C4F60026D549 /* Shop */,
 				B53E22D62E23F0DD00FC1A3A /* AppView.swift */,
@@ -327,6 +330,7 @@
 				B560088B2E24A92D000558F8 /* ProfileView.swift in Sources */,
 				B53E22D72E23F0DF00FC1A3A /* AppView.swift in Sources */,
 				B57B2A4E2E28C4FC0026D549 /* ShopView.swift in Sources */,
+				B5F6ED4F2E4C7BCC00547051 /* QuizOfTheDay.swift in Sources */,
 				B53E22D22E23ED6400FC1A3A /* QuizQuestion.swift in Sources */,
 				B59E6D512E25B10E00FFC42C /* UserProgress.swift in Sources */,
 				B53E22CF2E23EACE00FC1A3A /* QuizList.swift in Sources */,

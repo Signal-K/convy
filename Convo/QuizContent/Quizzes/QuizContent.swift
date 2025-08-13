@@ -122,6 +122,119 @@ struct QuizContent {
             )
         ],
         
+        "Deepening Intimacy": [
+            QuizQuestion(
+                question: "You see a broken vase and Liam looking uneasy. How should you begin the conversation?",
+                answers: [
+                    "A. \"Liam, why did you break this vase?\"",
+                    "B. \"I see the vase is broken. Can you tell me what happened when you're ready?\"",
+                    "C. \"You need to clean this up right now!\"",
+                    "D. \"That was very careless of you.\""
+                ],
+                correctAnswer: "B. \"I see the vase is broken. Can you tell me what happened when you're ready?\"",
+                mainSkill: "Empathy and Tone"
+            ),
+            QuizQuestion(
+                question: "Liam looks at you but doesn't speak yet. How can you open the conversation gently?",
+                answers: [
+                    "A. \"It's okay, Liam. Take your time and tell me what happened when you're ready.\"",
+                    "B. \"Why won't you just tell me what you did? You can't hide from me.\"",
+                    "C. \"I'm really upset that you didn't tell me right away; you need to be honest.\"",
+                    "D. \"If you don't explain now, you'll be in trouble later.\""
+                ],
+                correctAnswer: "A. \"It's okay, Liam. Take your time and tell me what happened when you're ready.\"",
+                mainSkill: "Handling Awkward Moments"
+            ),
+            QuizQuestion(
+                question: "Liam is still quiet but seems less tense. What's the best way to ask him to talk?",
+                answers: [
+                    "A. \"Can you tell me in your own words what happened? I'm here to listen.\"",
+                    "B. \"You need to explain everything now, or there will be consequences.\"",
+                    "C. \"Stop hiding it and tell me right away, or I'll be really angry.\"",
+                    "D. \"I don't want excuses, just the truth so we can fix this.\""
+                ],
+                correctAnswer: "A. \"Can you tell me in your own words what happened? I'm here to listen.\"",
+                mainSkill: "Active Listening"
+            ),
+            QuizQuestion(
+                question: "Liam says, \"I accidentally knocked the vase off the table while reaching for my toy.\" How should you respond?",
+                answers: [
+                    "A. \"Thank you for telling me. Accidents happen, and I'm glad you shared it.\"",
+                    "B. \"That's careless! You should be more careful next time or you'll be in trouble.\"",
+                    "C. \"I don't believe you; you must be lying to avoid getting punished.\"",
+                    "D. \"Well, now we have to be extra careful because of your mistake.\""
+                ],
+                correctAnswer: "A. \"Thank you for telling me. Accidents happen, and I'm glad you shared it.\"",
+                mainSkill: "Empathy and Tone"
+            ),
+            QuizQuestion(
+                question: "Liam looks scared and says, \"I didn't mean to break it.\" What's the best way to respond?",
+                answers: [
+                    "A. \"It's okay to feel scared, accidents happen.\"",
+                    "B. \"Stop crying; it's just a vase, nothing to get upset about.\"",
+                    "C. \"You should be ashamed of yourself for being so careless.\"",
+                    "D. \"I'm really disappointed in you for breaking something valuable.\""
+                ],
+                correctAnswer: "A. \"It's okay to feel scared, accidents happen.\"",
+                mainSkill: "Empathy and Tone"
+            ),
+            QuizQuestion(
+                question: "Liam looks worried after breaking the vase. What is the best way to guide him in problem solving?",
+                answers: [
+                    "A. \"Let's think of how we can clean this up and maybe fix it.\"",
+                    "B. \"You need to clean this mess up yourself or you'll get in trouble.\"",
+                    "C. \"You should have been more careful; this is all your fault.\"",
+                    "D. \"I'll take care of it since you can't seem to handle anything properly.\""
+                ],
+                correctAnswer: "A. \"Let's think of how we can clean this up and maybe fix it.\"",
+                mainSkill: "Professional Communication"
+            ),
+            QuizQuestion(
+                question: "After helping Liam clean up, you want to explain why it's important to be careful around breakable things. What is the best way to explain this principle?",
+                answers: [
+                    "A. \"Things can get broken if we're not careful, and it can cost money to replace them.\"",
+                    "B. \"If you break something again, there will be serious consequences, so watch yourself.\"",
+                    "C. \"You should always be perfect and never make mistakes with important things.\"",
+                    "D. \"I don't want to see you near anything fragile again because you're careless.\""
+                ],
+                correctAnswer: "A. \"Things can get broken if we're not careful, and it can cost money to replace them.\"",
+                mainSkill: "Professional Communication"
+            ),
+            QuizQuestion(
+                question: "Liam looks worried after your explanation and asks if you're angry with him. How should you respond to reassure him best?",
+                answers: [
+                    "A. \"No, I'm not angry. I just want to make sure you learn to be careful next time.\"",
+                    "B. \"Of course I'm angry! You broke something important, and that's frustrating.\"",
+                    "C. \"Well, you should be more careful, so I'm a little upset.\"",
+                    "D. \"I don't have time to be angry with you right now. Just be careful.\""
+                ],
+                correctAnswer: "A. \"No, I'm not angry. I just want to make sure you learn to be careful next time.\"",
+                mainSkill: "Empathy and Tone"
+            ),
+            QuizQuestion(
+                question: "After the conversation, Liam seems calmer but unsure what to do next. How can you help him get back to his usual activities smoothly?",
+                answers: [
+                    "A. \"Let's tidy up together, then you can go play outside like normal.\"",
+                    "B. \"You need to sit quietly for a while and think about what happened.\"",
+                    "C. \"Just go to your room and don't come out until you've calmed down.\"",
+                    "D. \"Stop worrying about it and get back to what you were doing immediately.\""
+                ],
+                correctAnswer: "A. \"Let's tidy up together, then you can go play outside like normal.\"",
+                mainSkill: "Confidence in Conversation"
+            ),
+            QuizQuestion(
+                question: "You want Liam to feel safe coming to you next time he's upset or makes a mistake. What's the best way to encourage future communication?",
+                answers: [
+                    "A. \"Remember, you can always come to me if something's wrong — no matter what.\"",
+                    "B. \"Don't ever keep secrets from me again or there will be consequences.\"",
+                    "C. \"Try not to mess up next time; I won't be so patient.\"",
+                    "D. \"If you cause trouble again, you'll be in big trouble.\""
+                ],
+                correctAnswer: "A. \"Remember, you can always come to me if something's wrong — no matter what.\"",
+                mainSkill: "Empathy and Tone"
+            )
+        ],
+        
         "Turning an acquaintance to a friend": [
             QuizQuestion(
                 question: "What’s the best way to open the conversation?",
